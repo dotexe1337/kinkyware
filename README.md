@@ -1,9 +1,3 @@
-# Fabric Example Mod
+# This sucks.
 
-## Setup
-
-For setup instructions please see the [fabric wiki page](https://fabricmc.net/wiki/tutorial:setup) that relates to the IDE that you are using.
-
-## License
-
-This template is available under the CC0 license. Feel free to learn from it and incorporate it in your own projects.
+It really does. I'm sick of Minecraft and really don't feel like putting effort into a client anymore.
