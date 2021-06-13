@@ -76,7 +76,7 @@ public class FriendManager implements ClientSupport {
 				
 				if(string.contains(name))
 					if(this.isFriend(name))
-						return string.replace(name, "\247" + this.getAliasName(name) + "\247r");
+						return string.replace(name, "\247b" + this.getAliasName(name) + "\247r");
 			}
 			
 			for(AbstractClientPlayerEntity player : mc.world.getPlayers())
@@ -86,7 +86,7 @@ public class FriendManager implements ClientSupport {
 				
 				if(string.contains(name))
 					if(this.isFriend(name))
-						return string.replace(name, "\247" + this.getAliasName(name) + "\247r");
+						return string.replace(name, "\247b" + this.getAliasName(name) + "\247r");
 			}
 			
 			return string;
