@@ -16,11 +16,17 @@ public class MixinKeyboard {
 	private void onKeyEvent_1(long windowPointer, int key, int scanCode, int action, int modifiers, CallbackInfo callbackInfo) {
 		// TODO: bh setting 
 		switch(key) {
+		case GLFW.GLFW_KEY_GRAVE_ACCENT:
+			HackSupport.hud = !HackSupport.hud;
+			break;
 		case GLFW.GLFW_KEY_M:
 			HackSupport.flight = !HackSupport.flight;
 			break;
 		case GLFW.GLFW_KEY_G:
 			HackSupport.speed = !HackSupport.speed;
+			break;
+		case GLFW.GLFW_KEY_R:
+			HackSupport.killAura = !HackSupport.killAura;
 			break;
 		}
 	}

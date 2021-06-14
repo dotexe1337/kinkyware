@@ -16,8 +16,11 @@ import net.minecraft.block.AirBlock;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.MovementType;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.Vec3d;
 
 @Mixin(ClientPlayerEntity.class)
@@ -58,6 +61,17 @@ public class MixinClientPlayerEntity extends AbstractClientPlayerEntity implemen
 			mc.player.stepHeight = 1f;
 		} else {
 			mc.player.stepHeight = 0.5f;
+		}
+		if(HackSupport.killAura) {
+			for(Entity e: mc.world.getEntities()) {
+				if(e instanceof PlayerEntity) {
+					PlayerEntity pe = (PlayerEntity) e;
+					if(pe.distanceTo(mc.player) <= 6 && mc.player.getAttackCooldownProgress(0.0f) >= 1.0f) {
+						mc.player.attack(pe);
+						mc.player.swingHand(Hand.MAIN_HAND);
+					}
+				}
+			}
 		}
 	}
 	
