@@ -2,6 +2,7 @@ package net.fabricmc.example;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.example.friend.FriendManager;
+import net.fabricmc.example.utils.Timer;
 
 /**
  * 
@@ -13,9 +14,12 @@ public class Client implements ModInitializer {
 	
 	public static FriendManager friends;
 	
+	public static Timer flyTimer;
+	
 	@Override
 	public void onInitialize() {
 		friends = new FriendManager();
+		flyTimer = new Timer();
 	}
 	
 }

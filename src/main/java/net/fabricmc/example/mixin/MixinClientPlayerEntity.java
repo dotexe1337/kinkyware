@@ -7,11 +7,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.mojang.authlib.GameProfile;
 
+import net.fabricmc.example.Client;
 import net.fabricmc.example.ClientSupport;
 import net.fabricmc.example.HackSupport;
 import net.fabricmc.example.utils.BlockUtils;
 import net.fabricmc.example.utils.PlayerUtils;
-import net.fabricmc.example.utils.Timer;
 import net.minecraft.block.AirBlock;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -25,10 +25,7 @@ public class MixinClientPlayerEntity extends AbstractClientPlayerEntity implemen
 	
 	public MixinClientPlayerEntity(ClientWorld world, GameProfile profile) {
 		super(world, profile);
-		flyTimer = new Timer();
 	}
-	
-	Timer flyTimer;
 
 	@Inject(method = "move", at = @At("HEAD"), cancellable = true)
 	public void move(MovementType type, Vec3d movement, CallbackInfo info) {
@@ -42,10 +39,10 @@ public class MixinClientPlayerEntity extends AbstractClientPlayerEntity implemen
 			}
 			if(PlayerUtils.isMoving() && !mc.player.input.sneaking)
 				PlayerUtils.setSpeed(HackSupport.flySpeed);
-			if(flyTimer.hasPassed(75)) {
+			if(Client.flyTimer.hasPassed(75)) {
 				if(BlockUtils.getBlock(mc.player.getPos().getX(), mc.player.getPos().getY() - 0.034, mc.player.getPos().getZ()) instanceof AirBlock) {
 					mc.getNetworkHandler().getConnection().send(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getPos().getX(), mc.player.getPos().getY() - 0.035, mc.player.getPos().getZ(), true));
-					flyTimer.updateLastTime();
+					Client.flyTimer.updateLastTime();
 				}
 			} else {
 				if(BlockUtils.getBlock(mc.player.getPos().getX(), mc.player.getPos().getY() + 0.034, mc.player.getPos().getZ()) instanceof AirBlock) {
