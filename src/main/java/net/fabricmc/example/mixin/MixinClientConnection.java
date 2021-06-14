@@ -40,6 +40,22 @@ public class MixinClientConnection implements ClientSupport {
 					HackSupport.nofall = !HackSupport.nofall;
 					mc.inGameHud.getChatHud().addMessage(new LiteralText("NoFall: " + HackSupport.nofall));
 				}
+				else if(split[0].equalsIgnoreCase("fly")) {
+					if(split[1].equalsIgnoreCase("speed")) {
+						try {
+							HackSupport.flySpeed = Float.parseFloat(split[2]);
+							mc.inGameHud.getChatHud().addMessage(new LiteralText("flySpeed: " + HackSupport.flySpeed));
+						} catch (Exception e) { }
+					}
+				}
+				else if(split[0].equalsIgnoreCase("speed")) {
+					if(split[1].equalsIgnoreCase("speed")) {
+						try {
+							HackSupport.speedSpeed = Float.parseFloat(split[2]);
+							mc.inGameHud.getChatHud().addMessage(new LiteralText("speedSpeed: " + HackSupport.speedSpeed));
+						} catch (Exception e) { }
+					}
+				}
 				else if(split[0].equalsIgnoreCase("friend")) {
 					if (split.length < 3) {
 					      mc.inGameHud.getChatHud().addMessage(new LiteralText("Invalid args!"));
