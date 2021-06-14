@@ -1,6 +1,5 @@
 package net.fabricmc.example.mixin;
 
-import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -11,7 +10,13 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.example.ClientSupport;
 import net.fabricmc.example.HackSupport;
 import net.minecraft.client.gui.hud.InGameHud;
+import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.client.render.BufferRenderer;
+import net.minecraft.client.render.Tessellator;
+import net.minecraft.client.render.VertexFormat;
+import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.math.Matrix4f;
 
 @Mixin(InGameHud.class)
 public class MixinIngameHud implements ClientSupport {
@@ -32,5 +37,4 @@ public class MixinIngameHud implements ClientSupport {
 		
 		matrixStack.pop();
 	}
-	
 }
