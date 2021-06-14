@@ -66,7 +66,7 @@ public class MixinClientPlayerEntity extends AbstractClientPlayerEntity implemen
 			for(Entity e: mc.world.getEntities()) {
 				if(e instanceof PlayerEntity) {
 					PlayerEntity pe = (PlayerEntity) e;
-					if(pe.distanceTo(mc.player) <= 6 && mc.player.getAttackCooldownProgress(0.0f) >= 1.0f) {
+					if(pe.distanceTo(mc.player) <= 6 && mc.player.getAttackCooldownProgress(0.0f) >= 1.0f && pe != mc.player && pe != mc.cameraEntity) {
 						mc.player.attack(pe);
 						mc.player.swingHand(Hand.MAIN_HAND);
 					}
