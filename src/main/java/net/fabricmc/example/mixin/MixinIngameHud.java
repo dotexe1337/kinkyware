@@ -25,9 +25,10 @@ public class MixinIngameHud implements ClientSupport {
 		mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "flySpeed: " + HackSupport.flySpeed, 2, 12, 0xffffffff);
 		mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "speedSpeed: " + HackSupport.speedSpeed, 2, 22, 0xffffffff);
 		mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Protect: " + (HackSupport.protect ? "\247a" : "\247c") + HackSupport.protect, 2, 32, 0xffffffff);
-		mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Step: " + (HackSupport.step ? "\247a" : "\247c") + HackSupport.step, 2, 42, 0xffffffff);
-		mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Flight: " + (HackSupport.flight ? "\247a" : "\247c") + HackSupport.flight, 2, 52, 0xffffffff);
-		mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Speed: " + (HackSupport.speed ? "\247a" : "\247c") + HackSupport.speed, 2, 62, 0xffffffff);
+		mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "NoFall: " + (HackSupport.nofall ? "\247a" : "\247c") + HackSupport.nofall, 2, 42, 0xffffffff);
+		mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Step: " + (HackSupport.step ? "\247a" : "\247c") + HackSupport.step, 2, 52, 0xffffffff);
+		mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Flight: " + (HackSupport.flight ? "\247a" : "\247c") + HackSupport.flight, 2, 62, 0xffffffff);
+		mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Speed: " + (HackSupport.speed ? "\247a" : "\247c") + HackSupport.speed, 2, 72, 0xffffffff);
 		
 		matrixStack.pop();
 	}
