@@ -9,12 +9,15 @@ import com.mojang.authlib.GameProfile;
 
 import net.fabricmc.example.ClientSupport;
 import net.fabricmc.example.HackSupport;
+import net.fabricmc.example.utils.BlockUtils;
 import net.fabricmc.example.utils.PlayerUtils;
+import net.fabricmc.example.utils.Timer;
+import net.minecraft.block.AirBlock;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.MovementType;
-import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket.Action;
+import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.util.math.Vec3d;
 
 @Mixin(ClientPlayerEntity.class)
@@ -22,7 +25,10 @@ public class MixinClientPlayerEntity extends AbstractClientPlayerEntity implemen
 	
 	public MixinClientPlayerEntity(ClientWorld world, GameProfile profile) {
 		super(world, profile);
+		flyTimer = new Timer();
 	}
+	
+	Timer flyTimer;
 
 	@Inject(method = "move", at = @At("HEAD"), cancellable = true)
 	public void move(MovementType type, Vec3d movement, CallbackInfo info) {
@@ -34,8 +40,18 @@ public class MixinClientPlayerEntity extends AbstractClientPlayerEntity implemen
 			} else {
 				mc.player.setVelocity(mc.player.getVelocity().getX(), 0f, mc.player.getVelocity().getZ());
 			}
-			if(PlayerUtils.isMoving())
+			if(PlayerUtils.isMoving() && !mc.player.input.sneaking)
 				PlayerUtils.setSpeed(HackSupport.flySpeed);
+			if(flyTimer.hasPassed(75)) {
+				if(BlockUtils.getBlock(mc.player.getPos().getX(), mc.player.getPos().getY() - 0.034, mc.player.getPos().getZ()) instanceof AirBlock) {
+					mc.getNetworkHandler().getConnection().send(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getPos().getX(), mc.player.getPos().getY() - 0.035, mc.player.getPos().getZ(), true));
+					flyTimer.updateLastTime();
+				}
+			} else {
+				if(BlockUtils.getBlock(mc.player.getPos().getX(), mc.player.getPos().getY() + 0.034, mc.player.getPos().getZ()) instanceof AirBlock) {
+					mc.getNetworkHandler().getConnection().send(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getPos().getX(), mc.player.getPos().getY() + 0.035, mc.player.getPos().getZ(), true));
+				}
+			}
 		}
 		if(HackSupport.speed) {
 			if(PlayerUtils.isMoving())

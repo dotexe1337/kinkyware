@@ -19,7 +19,7 @@ public class MixinIngameHud implements ClientSupport {
 	@Inject(method = "render", at = @At("RETURN"), cancellable = true)
 	public void render(MatrixStack matrixStack, float tickDelta, CallbackInfo info) {
 		matrixStack.push();
-		matrixStack.scale(0.75f, 0.75f, 0.75f);
+		matrixStack.scale(0.5f, 0.5f, 0.5f);
 		
 		mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Kinkyware v0.0.2", 2, 2, 0xffffffff);
 		mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "flySpeed: " + HackSupport.flySpeed, 2, 12, 0xffffffff);
