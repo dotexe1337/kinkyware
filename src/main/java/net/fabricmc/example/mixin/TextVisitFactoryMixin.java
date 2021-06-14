@@ -5,6 +5,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 import net.fabricmc.example.Client;
+import net.fabricmc.example.HackSupport;
 import net.minecraft.client.font.TextVisitFactory;
 
 @Mixin(TextVisitFactory.class)
@@ -18,6 +19,6 @@ public abstract class TextVisitFactoryMixin
 		index = 0)
 	private static String adjustText(String text)
 	{
-		return Client.friends.protect(text);
+		return (HackSupport.protect ? Client.friends.protect(text) : text);
 	}
 }
