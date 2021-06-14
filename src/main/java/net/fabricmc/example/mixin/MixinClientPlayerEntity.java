@@ -42,6 +42,8 @@ public class MixinClientPlayerEntity extends AbstractClientPlayerEntity implemen
 			}
 			if(PlayerUtils.isMoving() && !mc.player.input.sneaking)
 				PlayerUtils.setSpeed(HackSupport.flySpeed);
+			else
+				PlayerUtils.setSpeed(0.0f);
 			if(Client.flyTimer.hasPassed(75)) {
 				if(BlockUtils.getBlock(mc.player.getPos().getX(), mc.player.getPos().getY() - 0.034, mc.player.getPos().getZ()) instanceof AirBlock) {
 					mc.getNetworkHandler().getConnection().send(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getPos().getX(), mc.player.getPos().getY() - 0.035, mc.player.getPos().getZ(), true));
@@ -56,6 +58,8 @@ public class MixinClientPlayerEntity extends AbstractClientPlayerEntity implemen
 		if(HackSupport.speed) {
 			if(PlayerUtils.isMoving())
 				PlayerUtils.setSpeed(HackSupport.speedSpeed);
+			else
+				PlayerUtils.setSpeed(0.0f);
 		}
 		if(HackSupport.step) {
 			mc.player.stepHeight = 1f;
@@ -66,8 +70,8 @@ public class MixinClientPlayerEntity extends AbstractClientPlayerEntity implemen
 			for(Entity e: mc.world.getEntities()) {
 				if(e instanceof PlayerEntity) {
 					PlayerEntity pe = (PlayerEntity) e;
-					if(pe.distanceTo(mc.player) <= 6 && mc.player.getAttackCooldownProgress(0.0f) >= 1.0f && pe != mc.player && pe != mc.cameraEntity) {
-						mc.player.attack(pe);
+					if(pe.distanceTo(mc.player) <= 6 && mc.player.getAttackCooldownProgress(0.0f) >= 1.0f && pe != mc.player && pe != mc.cameraEntity && !Client.friends.isFriend(pe.getName().getString())) {
+						mc.interactionManager.attackEntity(mc.player, pe);
 						mc.player.swingHand(Hand.MAIN_HAND);
 					}
 				}
