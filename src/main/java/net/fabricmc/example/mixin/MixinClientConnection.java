@@ -30,15 +30,15 @@ public class MixinClientConnection implements ClientSupport {
 				String[] split = (packet).getChatMessage().substring(1).split(" ");
 				if(split[0].equalsIgnoreCase("step")) {
 					HackSupport.step = !HackSupport.step;
-					mc.inGameHud.getChatHud().addMessage(new LiteralText("Step: " + HackSupport.step));
+					mc.inGameHud.getChatHud().addMessage(new LiteralText("Step: " + (HackSupport.step ? "\247a" : "\247c") + HackSupport.step));
 				}
 				else if(split[0].equalsIgnoreCase("protect")) {
 					HackSupport.protect = !HackSupport.protect;
-					mc.inGameHud.getChatHud().addMessage(new LiteralText("NameProtect: " + HackSupport.protect));
+					mc.inGameHud.getChatHud().addMessage(new LiteralText("Protect: " + (HackSupport.protect ? "\247a" : "\247c") + HackSupport.protect));
 				}
 				else if(split[0].equalsIgnoreCase("nofall")) {
 					HackSupport.nofall = !HackSupport.nofall;
-					mc.inGameHud.getChatHud().addMessage(new LiteralText("NoFall: " + HackSupport.nofall));
+					mc.inGameHud.getChatHud().addMessage(new LiteralText("NoFall: " + (HackSupport.nofall ? "\247a" : "\247c") + HackSupport.nofall));
 				}
 				else if(split[0].equalsIgnoreCase("fly")) {
 					if(split[1].equalsIgnoreCase("speed")) {
