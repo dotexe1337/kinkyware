@@ -19,6 +19,8 @@ import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MovementType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
+import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket.Mode;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.Vec3d;
@@ -71,8 +73,15 @@ public class MixinClientPlayerEntity extends AbstractClientPlayerEntity implemen
 				if(e instanceof PlayerEntity) {
 					PlayerEntity pe = (PlayerEntity) e;
 					if(pe.distanceTo(mc.player) <= 6 && mc.player.getAttackCooldownProgress(0.0f) >= 1.0f && pe != mc.player && pe != mc.cameraEntity && !Client.friends.isFriend(pe.getName().getString())) {
+						boolean wasSprinting = mc.player.isSprinting();
+						if (wasSprinting)
+							mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, Mode.STOP_SPRINTING));
+						
 						mc.interactionManager.attackEntity(mc.player, pe);
 						mc.player.swingHand(Hand.MAIN_HAND);
+						
+						if (wasSprinting)
+							mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, Mode.START_SPRINTING));
 					}
 				}
 			}

@@ -25,7 +25,23 @@ public class PlayerUtils implements ClientSupport {
     }
 	
 	public static void setSpeed(double speed) {
-	    mc.player.setVelocity(-MathHelper.sin(getDirection()) * speed, mc.player.getVelocity().getY(), MathHelper.cos(getDirection()) * speed);
+		double forward = mc.player.forwardSpeed;
+		double strafe = mc.player.sidewaysSpeed;
+		float yaw = mc.player.headYaw;
+		if(forward != 0) {
+			if(strafe > 0) {
+				yaw += ((forward > 0) ? -45 : 45);
+			} else if(strafe < 0) {
+				yaw += ((forward > 0) ? 45 : -45);
+			}
+			strafe = 0;
+			if(forward > 0) {
+				forward = 1;
+			}else {
+				forward = -1;
+			}
+		}
+		mc.player.setVelocity(forward * speed * Math.cos(Math.toRadians((yaw + 90.0F))) + strafe * speed * Math.sin(Math.toRadians((yaw + 90.0F))), mc.player.getVelocity().getY(), forward * speed * Math.sin(Math.toRadians((yaw + 90.0F))) - strafe * speed * Math.cos(Math.toRadians((yaw + 90.0F))));
 	}
 	
 }
