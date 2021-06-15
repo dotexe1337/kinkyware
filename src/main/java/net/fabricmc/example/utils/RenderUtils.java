@@ -1,10 +1,9 @@
-package net.fabricmc.example.utils.render;
+package net.fabricmc.example.utils;
 
 import org.apache.commons.lang3.ArrayUtils;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import net.fabricmc.example.utils.Boxes;
 import net.fabricmc.example.utils.render.color.LineColor;
 import net.fabricmc.example.utils.render.color.QuadColor;
 import net.minecraft.client.MinecraftClient;
