@@ -20,6 +20,7 @@ public class MixinClientWorld implements ClientSupport {
 				mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.OnGroundOnly(true));
 			}
 		}
+		mc.options.gamma = HackSupport.gamma;
 	}
 	
 }

@@ -2,6 +2,8 @@ package net.fabricmc.example;
 
 public class HackSupport {
 	
+	public static int gamma = 1;
+	
 	public static boolean hud = true;
 	public static boolean protect = true;
 	

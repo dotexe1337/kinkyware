@@ -25,7 +25,7 @@ public class MixinClientConnection implements ClientSupport {
 	public void send(Packet<?> pack, GenericFutureListener<? extends Future<? super Void>> packetCallback, CallbackInfo callback) {
 		if (pack instanceof ChatMessageC2SPacket) {
 			ChatMessageC2SPacket packet = (ChatMessageC2SPacket) pack;
-			if((packet).getChatMessage().startsWith("$")) {
+			if((packet).getChatMessage().startsWith("#")) {
 				callback.cancel();
 				String[] split = (packet).getChatMessage().substring(1).split(" ");
 				if(split[0].equalsIgnoreCase("step")) {
@@ -56,7 +56,13 @@ public class MixinClientConnection implements ClientSupport {
 						} catch (Exception e) { }
 					}
 				}
-				else if(split[0].equalsIgnoreCase("friend")) {
+				else if(split[0].equalsIgnoreCase("gamma")) {
+					try {
+						HackSupport.gamma = Integer.parseInt(split[1]);
+						mc.inGameHud.getChatHud().addMessage(new LiteralText("gamma: " + HackSupport.gamma));
+					} catch (Exception e) { }
+				}
+				else if(split[0].equalsIgnoreCase("friend") || split[0].equalsIgnoreCase("f")) {
 					if (split.length < 3) {
 					      mc.inGameHud.getChatHud().addMessage(new LiteralText("Invalid args!"));
 					      return;
