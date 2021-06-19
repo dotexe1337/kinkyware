@@ -44,7 +44,7 @@ public class MixinClientConnection implements ClientSupport {
 					if(split[1].equalsIgnoreCase("speed")) {
 						try {
 							HackSupport.flySpeed = Float.parseFloat(split[2]);
-							mc.inGameHud.getChatHud().addMessage(new LiteralText("flySpeed: " + HackSupport.flySpeed));
+							mc.inGameHud.getChatHud().addMessage(new LiteralText("flySpeed: \247e" + HackSupport.flySpeed));
 						} catch (Exception e) { }
 					}
 				}
@@ -52,14 +52,14 @@ public class MixinClientConnection implements ClientSupport {
 					if(split[1].equalsIgnoreCase("speed")) {
 						try {
 							HackSupport.speedSpeed = Float.parseFloat(split[2]);
-							mc.inGameHud.getChatHud().addMessage(new LiteralText("speedSpeed: " + HackSupport.speedSpeed));
+							mc.inGameHud.getChatHud().addMessage(new LiteralText("speedSpeed: \247e" + HackSupport.speedSpeed));
 						} catch (Exception e) { }
 					}
 				}
 				else if(split[0].equalsIgnoreCase("gamma")) {
 					try {
 						HackSupport.gamma = Integer.parseInt(split[1]);
-						mc.inGameHud.getChatHud().addMessage(new LiteralText("gamma: " + HackSupport.gamma));
+						mc.inGameHud.getChatHud().addMessage(new LiteralText("gamma: \247e" + HackSupport.gamma));
 					} catch (Exception e) { }
 				}
 				else if(split[0].equalsIgnoreCase("friend") || split[0].equalsIgnoreCase("f")) {
@@ -78,18 +78,18 @@ public class MixinClientConnection implements ClientSupport {
 					        } 
 					      } 
 					      if (Client.friends.isFriend(split[2]) && split.length < 3) {
-					        mc.inGameHud.getChatHud().addMessage(new LiteralText(String.valueOf(String.valueOf(split[2])) + " is already your friend."));
+					        mc.inGameHud.getChatHud().addMessage(new LiteralText("\247e" + String.valueOf(String.valueOf(split[2])) + "\247r is already your friend."));
 					        return;
 					      } 
 					      Client.friends.removeFriend(split[2]);
 					      Client.friends.addFriend(split[2], alias);
-					      mc.inGameHud.getChatHud().addMessage(new LiteralText("Added " + split[2] + ((split.length > 3) ? (" as " + alias) : "")));
+					      mc.inGameHud.getChatHud().addMessage(new LiteralText("Added \247e" + split[2] + ((split.length > 3) ? (" as \247b" + alias) : "")));
 					    } else if (split[1].equalsIgnoreCase("del") || split[1].equalsIgnoreCase("d")) {
 					      if (Client.friends.isFriend(split[2])) {
 					        Client.friends.removeFriend(split[2]);
-					        mc.inGameHud.getChatHud().addMessage(new LiteralText("Removed friend: " + split[2]));
+					        mc.inGameHud.getChatHud().addMessage(new LiteralText("Removed friend: \247e" + split[2]));
 					      } else {
-					        mc.inGameHud.getChatHud().addMessage(new LiteralText(String.valueOf(String.valueOf(split[2])) + " is not your friend."));
+					        mc.inGameHud.getChatHud().addMessage(new LiteralText("\247e" + String.valueOf(String.valueOf(split[2])) + "\247r is not your friend."));
 					      } 
 					    } else {
 					      mc.inGameHud.getChatHud().addMessage(new LiteralText("Invalid args!"));
