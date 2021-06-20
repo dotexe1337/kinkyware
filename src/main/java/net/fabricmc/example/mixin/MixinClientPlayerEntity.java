@@ -34,29 +34,6 @@ public class MixinClientPlayerEntity extends AbstractClientPlayerEntity implemen
 
 	@Inject(method = "move", at = @At("HEAD"), cancellable = true)
 	public void move(MovementType type, Vec3d movement, CallbackInfo info) {
-		if(HackSupport.flight) {
-			if(mc.player.input.jumping) {
-				mc.player.setVelocity(mc.player.getVelocity().getX(), 1f, mc.player.getVelocity().getZ());
-			} else if(mc.player.input.sneaking) {
-				mc.player.setVelocity(mc.player.getVelocity().getX(), -1f, mc.player.getVelocity().getZ());
-			} else {
-				mc.player.setVelocity(mc.player.getVelocity().getX(), 0f, mc.player.getVelocity().getZ());
-			}
-			if(PlayerUtils.isMoving() && !mc.player.input.sneaking)
-				PlayerUtils.setSpeed(HackSupport.flySpeed);
-			else
-				PlayerUtils.setSpeed(0.0f);
-			if(Client.flyTimer.hasPassed(75)) {
-				if(BlockUtils.getBlock(mc.player.getPos().getX(), mc.player.getPos().getY() - 0.034, mc.player.getPos().getZ()) instanceof AirBlock) {
-					mc.getNetworkHandler().getConnection().send(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getPos().getX(), mc.player.getPos().getY() - 0.035, mc.player.getPos().getZ(), true));
-					Client.flyTimer.updateLastTime();
-				}
-			} else {
-				if(BlockUtils.getBlock(mc.player.getPos().getX(), mc.player.getPos().getY() + 0.034, mc.player.getPos().getZ()) instanceof AirBlock) {
-					mc.getNetworkHandler().getConnection().send(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getPos().getX(), mc.player.getPos().getY() + 0.035, mc.player.getPos().getZ(), true));
-				}
-			}
-		}
 		if(HackSupport.speed) {
 			if(PlayerUtils.isMoving())
 				PlayerUtils.setSpeed(HackSupport.speedSpeed);
