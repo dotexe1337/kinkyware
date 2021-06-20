@@ -28,7 +28,6 @@ public class MixinClientWorld implements ClientSupport {
 		if(HackSupport.freecam) {
 			mc.player.setOnGround(false);
 			mc.player.setPose(EntityPose.STANDING);
-			mc.player.renderPitch = 5000f;
 			if(mc.player.input.jumping) {
 				mc.player.setVelocity(mc.player.getVelocity().getX(), 1f, mc.player.getVelocity().getZ());
 			} else if(mc.player.input.sneaking) {
@@ -36,10 +35,7 @@ public class MixinClientWorld implements ClientSupport {
 			} else {
 				mc.player.setVelocity(mc.player.getVelocity().getX(), 0f, mc.player.getVelocity().getZ());
 			}
-			if(PlayerUtils.isMoving() && !mc.player.input.sneaking)
-				PlayerUtils.setSpeed(HackSupport.flySpeed);
-			else
-				PlayerUtils.setSpeed(0.0f);
+			PlayerUtils.setSpeed(HackSupport.flySpeed);
 		}
 		if(HackSupport.flight) {
 			if(mc.player.input.jumping) {

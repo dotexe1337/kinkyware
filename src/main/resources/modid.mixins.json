@@ -15,7 +15,8 @@
     "MixinKeyboard",
     "MixinEntityRenderer",
     "MixinPlayerEntity",
-    "MixinMinecraftClient"
+    "MixinMinecraftClient",
+    "MixinHeldItemRenderer"
   ],
   "injectors": {
     "defaultRequire": 1
