@@ -69,6 +69,9 @@ public class MixinClientPlayerEntity extends AbstractClientPlayerEntity implemen
 		} else {
 			mc.player.stepHeight = 0.5f;
 		}
+		if(HackSupport.freecam) {
+			mc.player.noClip = true;
+		}
 		if(HackSupport.killAura) {
 			for(Entity e: mc.world.getEntities()) {
 				if(e instanceof PlayerEntity) {

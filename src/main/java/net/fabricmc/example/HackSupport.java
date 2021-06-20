@@ -1,5 +1,8 @@
 package net.fabricmc.example;
 
+import net.fabricmc.example.utils.PlayerCopyEntity;
+import net.minecraft.entity.Entity;
+
 public class HackSupport {
 	
 	public static int gamma = 1;
@@ -16,9 +19,19 @@ public class HackSupport {
 	public static boolean nofall = false;
 	public static boolean killAura = false;
 	public static boolean speedMine = false;
+	public static boolean sneak = false;
+	public static boolean freecam = false;
 	
 	public static boolean esp = false;
 	public static boolean tracers = false;
-	public static boolean sneak = false;
+	
+	/* Freecam */
+	public static PlayerCopyEntity dummy;
+	public static double[] playerPos;
+	public static float[] playerRot;
+	public static Entity riding;
+
+	public static boolean prevFlying;
+	public static float prevFlySpeed;
 	
 }

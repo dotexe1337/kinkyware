@@ -11,10 +11,10 @@ import io.netty.util.concurrent.GenericFutureListener;
 import net.fabricmc.example.Client;
 import net.fabricmc.example.ClientSupport;
 import net.fabricmc.example.HackSupport;
-import net.fabricmc.example.utils.FabricReflect;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.network.Packet;
 import net.minecraft.network.packet.c2s.play.ChatMessageC2SPacket;
+import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.text.LiteralText;
 
@@ -23,6 +23,11 @@ public class MixinClientConnection implements ClientSupport {
 	
 	@Inject(method = "send(Lnet/minecraft/network/Packet;Lio/netty/util/concurrent/GenericFutureListener;)V", at = @At("HEAD"), cancellable = true)
 	public void send(Packet<?> pack, GenericFutureListener<? extends Future<? super Void>> packetCallback, CallbackInfo callback) {
+		if(HackSupport.freecam) {
+			if (pack instanceof ClientCommandC2SPacket || pack instanceof PlayerMoveC2SPacket) {
+				callback.cancel();
+			}
+		}
 		if (pack instanceof ChatMessageC2SPacket) {
 			ChatMessageC2SPacket packet = (ChatMessageC2SPacket) pack;
 			if((packet).getChatMessage().startsWith("$")) {

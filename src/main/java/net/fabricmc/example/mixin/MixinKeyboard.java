@@ -8,10 +8,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.fabricmc.example.ClientSupport;
 import net.fabricmc.example.HackSupport;
+import net.fabricmc.example.utils.PlayerCopyEntity;
 import net.minecraft.client.Keyboard;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket.Mode;
+import net.minecraft.util.math.Vec3d;
 
 @Mixin(Keyboard.class)
 public class MixinKeyboard implements ClientSupport {
@@ -39,6 +41,45 @@ public class MixinKeyboard implements ClientSupport {
 			HackSupport.sneak = !HackSupport.sneak;
 			if(!HackSupport.sneak) {
 				sendSneakPacket(Mode.RELEASE_SHIFT_KEY);
+			}
+			break;
+		case GLFW.GLFW_KEY_V:
+			HackSupport.freecam = !HackSupport.freecam;
+			if(HackSupport.freecam) {
+				mc.chunkCullingEnabled = false;
+
+				HackSupport.playerPos = new double[] { mc.player.getX(), mc.player.getY(), mc.player.getZ() };
+				HackSupport.playerRot = new float[] { mc.player.getYaw(), mc.player.getPitch() };
+
+				HackSupport.dummy = new PlayerCopyEntity(mc.player);
+
+				HackSupport.dummy.spawn();
+
+				if (mc.player.getVehicle() != null) {
+					HackSupport.riding = mc.player.getVehicle();
+					mc.player.getVehicle().removeAllPassengers();
+				}
+
+				if (mc.player.isSprinting()) {
+					mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, Mode.STOP_SPRINTING));
+				}
+
+				HackSupport.prevFlying = mc.player.getAbilities().flying;
+				HackSupport.prevFlySpeed = mc.player.getAbilities().getFlySpeed();
+			} else {
+				mc.chunkCullingEnabled = true;
+
+				HackSupport.dummy.despawn();
+				mc.player.noClip = false;
+				mc.player.getAbilities().flying = HackSupport.prevFlying;
+				mc.player.getAbilities().setFlySpeed(HackSupport.prevFlySpeed);
+
+				mc.player.refreshPositionAndAngles(HackSupport.playerPos[0], HackSupport.playerPos[1], HackSupport.playerPos[2], HackSupport.playerRot[0], HackSupport.playerRot[1]);
+				mc.player.setVelocity(Vec3d.ZERO);
+
+				if (HackSupport.riding != null && mc.world.getEntityById(HackSupport.riding.getId()) != null) {
+					mc.player.startRiding(HackSupport.riding);
+				}
 			}
 			break;
 		}

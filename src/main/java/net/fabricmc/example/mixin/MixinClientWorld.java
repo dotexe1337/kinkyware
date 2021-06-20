@@ -12,6 +12,7 @@ import net.fabricmc.example.utils.BlockUtils;
 import net.fabricmc.example.utils.PlayerUtils;
 import net.minecraft.block.AirBlock;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.entity.EntityPose;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 
 @Mixin(ClientWorld.class)
@@ -23,6 +24,21 @@ public class MixinClientWorld implements ClientSupport {
 			if(mc.player.fallDistance > 2.5f) {
 				mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.OnGroundOnly(true));
 			}
+		}
+		if(HackSupport.freecam) {
+			mc.player.setOnGround(false);
+			mc.player.setPose(EntityPose.STANDING);
+			if(mc.player.input.jumping) {
+				mc.player.setVelocity(mc.player.getVelocity().getX(), 1f, mc.player.getVelocity().getZ());
+			} else if(mc.player.input.sneaking) {
+				mc.player.setVelocity(mc.player.getVelocity().getX(), -1f, mc.player.getVelocity().getZ());
+			} else {
+				mc.player.setVelocity(mc.player.getVelocity().getX(), 0f, mc.player.getVelocity().getZ());
+			}
+			if(PlayerUtils.isMoving() && !mc.player.input.sneaking)
+				PlayerUtils.setSpeed(HackSupport.flySpeed);
+			else
+				PlayerUtils.setSpeed(0.0f);
 		}
 		if(HackSupport.flight) {
 			if(mc.player.input.jumping) {
