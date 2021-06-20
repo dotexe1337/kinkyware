@@ -13,7 +13,8 @@
     "TextVisitFactoryMixin",
     "MixinClientConnection",
     "MixinKeyboard",
-    "MixinEntityRenderer"
+    "MixinEntityRenderer",
+    "MixinPlayerEntity"
   ],
   "injectors": {
     "defaultRequire": 1

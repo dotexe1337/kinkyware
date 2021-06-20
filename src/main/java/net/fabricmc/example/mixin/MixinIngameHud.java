@@ -39,6 +39,7 @@ public class MixinIngameHud implements ClientSupport {
 			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Flight: " + (HackSupport.flight ? "\247a" : "\247c") + HackSupport.flight, 2, 92, 0xffffffff);
 			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Speed: " + (HackSupport.speed ? "\247a" : "\247c") + HackSupport.speed, 2, 102, 0xffffffff);
 			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "KillAura: " + (HackSupport.killAura ? "\247a" : "\247c") + HackSupport.killAura, 2, 112, 0xffffffff);
+			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "SpeedMine: " + (HackSupport.speedMine ? "\247a" : "\247c") + HackSupport.speedMine, 2, 122, 0xffffffff);
 			
 			matrixStack.pop();
 		}

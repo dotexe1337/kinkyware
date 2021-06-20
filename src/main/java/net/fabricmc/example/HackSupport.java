@@ -15,6 +15,7 @@ public class HackSupport {
 	public static boolean step = false;
 	public static boolean nofall = false;
 	public static boolean killAura = false;
+	public static boolean speedMine = false;
 	
 	public static boolean esp = false;
 	public static boolean tracers = false;
