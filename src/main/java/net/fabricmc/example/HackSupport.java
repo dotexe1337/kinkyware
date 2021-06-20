@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity;
 public class HackSupport {
 	
 	public static int gamma = 1;
+	public static float reach = 6f;
 	
 	public static boolean hud = true;
 	public static boolean protect = false;

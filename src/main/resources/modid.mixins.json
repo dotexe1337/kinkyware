@@ -16,7 +16,8 @@
     "MixinEntityRenderer",
     "MixinPlayerEntity",
     "MixinMinecraftClient",
-    "MixinHeldItemRenderer"
+    "MixinHeldItemRenderer",
+    "ClientPlayerInteractionManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

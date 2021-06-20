@@ -78,6 +78,12 @@ public class MixinClientConnection implements ClientSupport {
 						mc.inGameHud.getChatHud().addMessage(new LiteralText("gamma: \247e" + HackSupport.gamma));
 					} catch (Exception e) { }
 				}
+				else if(split[0].equalsIgnoreCase("reach")) {
+					try {
+						HackSupport.reach = Integer.parseInt(split[1]);
+						mc.inGameHud.getChatHud().addMessage(new LiteralText("reach: \247e" + HackSupport.reach));
+					} catch (Exception e) { }
+				}
 				else if (split[0].equalsIgnoreCase("add")) {
 				      String alias = split[1];
 				      if (split.length > 3) {

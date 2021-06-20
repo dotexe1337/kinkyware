@@ -65,7 +65,7 @@ public class FriendManager implements ClientSupport {
 			
 			String me = mc.getSession().getUsername();
 			if(string.contains(me))
-				return string.replace(me, "\247bBiggus Dickus\247r");
+				return string.replace(me, "\2479Biggus Dickus\247r");
 			
 			int i = 0;
 			for(PlayerListEntry info : mc.player.networkHandler.getPlayerList())
@@ -76,7 +76,7 @@ public class FriendManager implements ClientSupport {
 				
 				if(string.contains(name))
 					if(this.isFriend(name))
-						return string.replace(name, "\247b" + this.getAliasName(name) + "\247r");
+						return string.replace(name, "\2479" + this.getAliasName(name) + "\247r");
 			}
 			
 			for(AbstractClientPlayerEntity player : mc.world.getPlayers())
@@ -86,7 +86,7 @@ public class FriendManager implements ClientSupport {
 				
 				if(string.contains(name))
 					if(this.isFriend(name))
-						return string.replace(name, "\247b" + this.getAliasName(name) + "\247r");
+						return string.replace(name, "\2479" + this.getAliasName(name) + "\247r");
 			}
 			
 			return string;

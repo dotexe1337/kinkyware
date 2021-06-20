@@ -108,9 +108,9 @@ public class MixinWorldRenderer implements ClientSupport {
 
 				if (entity instanceof PlayerEntity) {
 					if(Client.friends.isFriend(((PlayerEntity)entity).getName().getString())) {
-						lines.add("\247b" + Client.friends.getAliasName(((PlayerEntity)entity).getName().getString()));
+						lines.add("\2479" + Client.friends.getAliasName(((PlayerEntity)entity).getName().getString()));
 					} else {
-						lines.add((livingEntity.distanceTo(mc.player) <= 64 ? "\247c" : "\247a") + ((PlayerEntity)entity).getName().getString());
+						lines.add((livingEntity.distanceTo(mc.player) <= 64 ? "\2474" : "\2472") + ((PlayerEntity)entity).getName().getString());
 					}
 					
 					scale = Math.max(2 * (mc.cameraEntity.distanceTo(entity) / 20), 1);
@@ -138,7 +138,7 @@ public class MixinWorldRenderer implements ClientSupport {
 	
 	public float[] getColorByDistance(final Entity entity) {
         if (entity instanceof PlayerEntity && Client.friends.isFriend(entity.getName().getString())) {
-            return new float[] { (85 / 255), (255 / 255), (255 / 255), 1.0f };
+            return new float[] { (85 / 255), (85 / 255), (255 / 255), 1.0f };
         }
         final Color col = new Color(Color.HSBtoRGB((float)(Math.max(0.0, Math.min(mc.player.squaredDistanceTo(entity), 2500.0f) / 2500.0f) / 3.0), 1.0f, 1.0f) | 0x000000);
         return new float[] { col.getRed() / 255.0f, col.getGreen() / 255.0f, col.getBlue() / 255.0f };
