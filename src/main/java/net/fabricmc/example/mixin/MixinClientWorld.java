@@ -36,9 +36,15 @@ public class MixinClientWorld implements ClientSupport {
 				PlayerUtils.setSpeed(HackSupport.flySpeed);
 			else
 				PlayerUtils.setSpeed(0.0f);
-			if (mc.player.age % 20 == 0) {
-				mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() - 0.069, mc.player.getZ(), false));
-				mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getZ() + 0.069, mc.player.getZ(), true));
+			if(Client.flyTimer.hasPassed(75)) {
+				if(BlockUtils.getBlock(mc.player.getPos().getX(), mc.player.getPos().getY() - 0.069, mc.player.getPos().getZ()) instanceof AirBlock) {
+					mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() - 0.069, mc.player.getZ(), false));
+					Client.flyTimer.updateLastTime();
+				}
+			} else {
+				if(BlockUtils.getBlock(mc.player.getPos().getX(), mc.player.getPos().getY() + 0.069, mc.player.getPos().getZ()) instanceof AirBlock) {
+					mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() + 0.069, mc.player.getZ(), true));
+				}
 			}
 		}
 		mc.options.gamma = HackSupport.gamma;
