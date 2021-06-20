@@ -1,9 +1,10 @@
 package net.fabricmc.example.utils;
 
+import java.lang.reflect.Field;
+
 import org.apache.commons.lang3.reflect.FieldUtils;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.sun.jdi.Field;
 
 import net.fabricmc.example.ClientSupport;
 import net.minecraft.client.MinecraftClient;
