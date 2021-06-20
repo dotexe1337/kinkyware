@@ -28,6 +28,7 @@ public class MixinClientWorld implements ClientSupport {
 		if(HackSupport.freecam) {
 			mc.player.setOnGround(false);
 			mc.player.setPose(EntityPose.STANDING);
+			mc.player.renderPitch = 5000f;
 			if(mc.player.input.jumping) {
 				mc.player.setVelocity(mc.player.getVelocity().getX(), 1f, mc.player.getVelocity().getZ());
 			} else if(mc.player.input.sneaking) {
