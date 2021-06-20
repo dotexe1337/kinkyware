@@ -19,6 +19,6 @@ public class HackSupport {
 	
 	public static boolean esp = false;
 	public static boolean tracers = false;
-	//public static boolean sneak = false;
+	public static boolean sneak = false;
 	
 }
