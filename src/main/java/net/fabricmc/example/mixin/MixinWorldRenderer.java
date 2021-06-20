@@ -61,7 +61,7 @@ public class MixinWorldRenderer implements ClientSupport {
 
 			float[] col = null;
 
-			if (e instanceof PlayerEntity && e != mc.player && e != mc.cameraEntity) {
+			if (e instanceof PlayerEntity && e != mc.player && e != mc.cameraEntity && !e.getName().getString().equalsIgnoreCase(mc.player.getName().getString())) {
 				col = getColorByDistance(e);
 			}
 
