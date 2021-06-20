@@ -107,6 +107,12 @@ public class MixinWorldRenderer implements ClientSupport {
 				LivingEntity livingEntity = (LivingEntity) entity;
 
 				if (entity instanceof PlayerEntity) {
+					if(Client.friends.isFriend(((PlayerEntity)entity).getName().getString())) {
+						lines.add("\247b" + Client.friends.getAliasName(((PlayerEntity)entity).getName().getString()));
+					} else {
+						lines.add(((PlayerEntity)entity).getName().getString());
+					}
+					
 					scale = Math.max(2 * (mc.cameraEntity.distanceTo(entity) / 20), 1);
 				}
 			}
