@@ -28,6 +28,9 @@ public class MixinKeyboard {
 		case GLFW.GLFW_KEY_R:
 			HackSupport.killAura = !HackSupport.killAura;
 			break;
+		case GLFW.GLFW_KEY_H:
+			HackSupport.speedMine = !HackSupport.speedMine;
+			break;
 		}
 	}
 }
