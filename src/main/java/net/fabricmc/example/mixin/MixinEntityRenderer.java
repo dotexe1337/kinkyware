@@ -17,8 +17,6 @@ public abstract class MixinEntityRenderer<T extends Entity> {
 
 	@Inject(method = "renderLabelIfPresent", at = @At("HEAD"), cancellable = true)
 	public void renderLabelIfPresent(T entity, Text text, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo info) {
-		if(entity instanceof PlayerEntity) {
-			info.cancel();
-		}
+		info.cancel();
 	}
 }
