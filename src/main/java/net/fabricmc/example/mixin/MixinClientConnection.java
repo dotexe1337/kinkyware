@@ -25,7 +25,7 @@ public class MixinClientConnection implements ClientSupport {
 	public void send(Packet<?> pack, GenericFutureListener<? extends Future<? super Void>> packetCallback, CallbackInfo callback) {
 		if (pack instanceof ChatMessageC2SPacket) {
 			ChatMessageC2SPacket packet = (ChatMessageC2SPacket) pack;
-			if((packet).getChatMessage().startsWith("#")) {
+			if((packet).getChatMessage().startsWith("$")) {
 				callback.cancel();
 				String[] split = (packet).getChatMessage().substring(1).split(" ");
 				if(split[0].equalsIgnoreCase("step")) {
