@@ -1,6 +1,8 @@
 package net.fabricmc.example.mixin;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
@@ -15,9 +17,10 @@ import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.fabricmc.example.Client;
 import net.fabricmc.example.ClientSupport;
+import net.fabricmc.example.HackSupport;
 import net.fabricmc.example.utils.RenderUtils;
+import net.fabricmc.example.utils.WorldRenderUtils;
 import net.fabricmc.example.utils.render.color.LineColor;
-import net.fabricmc.example.utils.render.color.QuadColor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.GameRenderer;
@@ -25,7 +28,9 @@ import net.minecraft.client.render.LightmapTextureManager;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.text.LiteralText;
 import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3d;
 
@@ -62,27 +67,67 @@ public class MixinWorldRenderer implements ClientSupport {
 
 			if (col != null) {
 				// esp
-				RenderUtils.drawLine(e.getBoundingBox().minX, e.getBoundingBox().minY, e.getBoundingBox().minZ, e.getBoundingBox().maxX, e.getBoundingBox().minY, e.getBoundingBox().minZ, LineColor.single(col[0], col[1], col[2], 255 / 255), 1.2f);
-				RenderUtils.drawLine(e.getBoundingBox().maxX, e.getBoundingBox().minY, e.getBoundingBox().maxZ, e.getBoundingBox().minX, e.getBoundingBox().minY, e.getBoundingBox().maxZ, LineColor.single(col[0], col[1], col[2], 255 / 255), 1.2f);
-				RenderUtils.drawLine(e.getBoundingBox().minX, e.getBoundingBox().minY, e.getBoundingBox().minZ, e.getBoundingBox().minX, e.getBoundingBox().maxY, e.getBoundingBox().minZ, LineColor.single(col[0], col[1], col[2], 255 / 255), 1.2f);
-				RenderUtils.drawLine(e.getBoundingBox().maxX, e.getBoundingBox().maxY, e.getBoundingBox().minZ, e.getBoundingBox().maxX, e.getBoundingBox().maxY, e.getBoundingBox().maxZ, LineColor.single(col[0], col[1], col[2], 255 / 255), 1.2f);
-				RenderUtils.drawLine(e.getBoundingBox().minX, e.getBoundingBox().maxY, e.getBoundingBox().maxZ, e.getBoundingBox().minX, e.getBoundingBox().maxY, e.getBoundingBox().minZ, LineColor.single(col[0], col[1], col[2], 255 / 255), 1.2f);
-				RenderUtils.drawLine(e.getBoundingBox().minX, e.getBoundingBox().minY, e.getBoundingBox().minZ, e.getBoundingBox().minX, e.getBoundingBox().maxY, e.getBoundingBox().minZ, LineColor.single(col[0], col[1], col[2], 255 / 255), 1.2f);
-				RenderUtils.drawLine(e.getBoundingBox().maxX, e.getBoundingBox().minY, e.getBoundingBox().minZ, e.getBoundingBox().maxX, e.getBoundingBox().maxY, e.getBoundingBox().minZ, LineColor.single(col[0], col[1], col[2], 255 / 255), 1.2f);
-				RenderUtils.drawLine(e.getBoundingBox().maxX, e.getBoundingBox().minY, e.getBoundingBox().maxZ, e.getBoundingBox().maxX, e.getBoundingBox().maxY, e.getBoundingBox().maxZ, LineColor.single(col[0], col[1], col[2], 255 / 255), 1.2f);
-				RenderUtils.drawLine(e.getBoundingBox().minX, e.getBoundingBox().minY, e.getBoundingBox().maxZ, e.getBoundingBox().minX, e.getBoundingBox().maxY, e.getBoundingBox().maxZ, LineColor.single(col[0], col[1], col[2], 255 / 255), 1.2f);
-			    
-				RenderUtils.drawLine(e.getBoundingBox().minX, e.getBoundingBox().minY, e.getBoundingBox().minZ, e.getBoundingBox().minX, e.getBoundingBox().maxY, e.getBoundingBox().maxZ, LineColor.single(col[0], col[1], col[2], 255 / 255), 1.2f);
-				RenderUtils.drawLine(e.getBoundingBox().maxX, e.getBoundingBox().minY, e.getBoundingBox().minZ, e.getBoundingBox().minX, e.getBoundingBox().maxY, e.getBoundingBox().maxZ, LineColor.single(col[0], col[1], col[2], 255 / 255), 1.2f);
-				RenderUtils.drawLine(e.getBoundingBox().maxX, e.getBoundingBox().minY, e.getBoundingBox().maxZ, e.getBoundingBox().minX, e.getBoundingBox().maxY, e.getBoundingBox().maxZ, LineColor.single(col[0], col[1], col[2], 255 / 255), 1.2f);
-				RenderUtils.drawLine(e.getBoundingBox().maxX, e.getBoundingBox().minY, e.getBoundingBox().minZ, e.getBoundingBox().minX, e.getBoundingBox().maxY, e.getBoundingBox().minZ, LineColor.single(col[0], col[1], col[2], 255 / 255), 1.2f);
-				RenderUtils.drawLine(e.getBoundingBox().maxX, e.getBoundingBox().minY, e.getBoundingBox().minZ, e.getBoundingBox().minX, e.getBoundingBox().minY, e.getBoundingBox().maxZ, LineColor.single(col[0], col[1], col[2], 255 / 255), 1.2f);
-				RenderUtils.drawLine(e.getBoundingBox().maxX, e.getBoundingBox().maxY, e.getBoundingBox().minZ, e.getBoundingBox().minX, e.getBoundingBox().maxY, e.getBoundingBox().maxZ, LineColor.single(col[0], col[1], col[2], 255 / 255), 1.2f);
+				if(HackSupport.esp) {
+					RenderUtils.drawLine(e.getBoundingBox().minX, e.getBoundingBox().minY, e.getBoundingBox().minZ, e.getBoundingBox().maxX, e.getBoundingBox().minY, e.getBoundingBox().minZ, LineColor.single(col[0], col[1], col[2], 255 / 255), 1.2f);
+					RenderUtils.drawLine(e.getBoundingBox().maxX, e.getBoundingBox().minY, e.getBoundingBox().maxZ, e.getBoundingBox().minX, e.getBoundingBox().minY, e.getBoundingBox().maxZ, LineColor.single(col[0], col[1], col[2], 255 / 255), 1.2f);
+					RenderUtils.drawLine(e.getBoundingBox().minX, e.getBoundingBox().minY, e.getBoundingBox().minZ, e.getBoundingBox().minX, e.getBoundingBox().maxY, e.getBoundingBox().minZ, LineColor.single(col[0], col[1], col[2], 255 / 255), 1.2f);
+					RenderUtils.drawLine(e.getBoundingBox().maxX, e.getBoundingBox().maxY, e.getBoundingBox().minZ, e.getBoundingBox().maxX, e.getBoundingBox().maxY, e.getBoundingBox().maxZ, LineColor.single(col[0], col[1], col[2], 255 / 255), 1.2f);
+					RenderUtils.drawLine(e.getBoundingBox().minX, e.getBoundingBox().maxY, e.getBoundingBox().maxZ, e.getBoundingBox().minX, e.getBoundingBox().maxY, e.getBoundingBox().minZ, LineColor.single(col[0], col[1], col[2], 255 / 255), 1.2f);
+					RenderUtils.drawLine(e.getBoundingBox().minX, e.getBoundingBox().minY, e.getBoundingBox().minZ, e.getBoundingBox().minX, e.getBoundingBox().maxY, e.getBoundingBox().minZ, LineColor.single(col[0], col[1], col[2], 255 / 255), 1.2f);
+					RenderUtils.drawLine(e.getBoundingBox().maxX, e.getBoundingBox().minY, e.getBoundingBox().minZ, e.getBoundingBox().maxX, e.getBoundingBox().maxY, e.getBoundingBox().minZ, LineColor.single(col[0], col[1], col[2], 255 / 255), 1.2f);
+					RenderUtils.drawLine(e.getBoundingBox().maxX, e.getBoundingBox().minY, e.getBoundingBox().maxZ, e.getBoundingBox().maxX, e.getBoundingBox().maxY, e.getBoundingBox().maxZ, LineColor.single(col[0], col[1], col[2], 255 / 255), 1.2f);
+					RenderUtils.drawLine(e.getBoundingBox().minX, e.getBoundingBox().minY, e.getBoundingBox().maxZ, e.getBoundingBox().minX, e.getBoundingBox().maxY, e.getBoundingBox().maxZ, LineColor.single(col[0], col[1], col[2], 255 / 255), 1.2f);
+				    
+					RenderUtils.drawLine(e.getBoundingBox().minX, e.getBoundingBox().minY, e.getBoundingBox().minZ, e.getBoundingBox().minX, e.getBoundingBox().maxY, e.getBoundingBox().maxZ, LineColor.single(col[0], col[1], col[2], 255 / 255), 1.2f);
+					RenderUtils.drawLine(e.getBoundingBox().maxX, e.getBoundingBox().minY, e.getBoundingBox().minZ, e.getBoundingBox().minX, e.getBoundingBox().maxY, e.getBoundingBox().maxZ, LineColor.single(col[0], col[1], col[2], 255 / 255), 1.2f);
+					RenderUtils.drawLine(e.getBoundingBox().maxX, e.getBoundingBox().minY, e.getBoundingBox().maxZ, e.getBoundingBox().minX, e.getBoundingBox().maxY, e.getBoundingBox().maxZ, LineColor.single(col[0], col[1], col[2], 255 / 255), 1.2f);
+					RenderUtils.drawLine(e.getBoundingBox().maxX, e.getBoundingBox().minY, e.getBoundingBox().minZ, e.getBoundingBox().minX, e.getBoundingBox().maxY, e.getBoundingBox().minZ, LineColor.single(col[0], col[1], col[2], 255 / 255), 1.2f);
+					RenderUtils.drawLine(e.getBoundingBox().maxX, e.getBoundingBox().minY, e.getBoundingBox().minZ, e.getBoundingBox().minX, e.getBoundingBox().minY, e.getBoundingBox().maxZ, LineColor.single(col[0], col[1], col[2], 255 / 255), 1.2f);
+					RenderUtils.drawLine(e.getBoundingBox().maxX, e.getBoundingBox().maxY, e.getBoundingBox().minZ, e.getBoundingBox().minX, e.getBoundingBox().maxY, e.getBoundingBox().maxZ, LineColor.single(col[0], col[1], col[2], 255 / 255), 1.2f);
+				}
 				
 				// tracers
-				RenderUtils.drawLine(vec2.x, vec2.y, vec2.z, vec.x, vec.y, vec.z, LineColor.single(col[0], col[1], col[2], 255 / 255), 1.2f); 
+				if(HackSupport.tracers) {
+					RenderUtils.drawLine(vec2.x, vec2.y, vec2.z, vec.x, vec.y, vec.z, LineColor.single(col[0], col[1], col[2], 255 / 255), 1.2f);
+				}
 			}
 		}
+		
+		// nametags
+		for(Entity entity: mc.world.getEntities()) {
+			Vec3d rPos = getRenderPos(entity);
+			List<String> lines = new ArrayList<>();
+			double scale = 0;
+
+			if (entity instanceof LivingEntity) {
+				if (entity == mc.player || entity.hasPassenger(mc.player) || mc.player.hasPassenger(entity)) {
+					continue;
+				}
+
+				LivingEntity livingEntity = (LivingEntity) entity;
+
+				if (entity instanceof PlayerEntity) {
+					scale = Math.max(2 * (mc.cameraEntity.distanceTo(entity) / 20), 1);
+				}
+			}
+
+			if (!lines.isEmpty()) {
+				float offset = 0.25f + lines.size() * 0.25f;
+
+				for (String s: lines) {
+					WorldRenderUtils.drawText(new LiteralText(s), rPos.x, rPos.y + (offset * scale), rPos.z, scale, true);
+
+					offset -= 0.25f;
+				}
+			}
+		}
+	}
+	
+	private Vec3d getRenderPos(Entity e) {
+		return new Vec3d(
+				e.lastRenderX + (e.getX() - e.lastRenderX) * mc.getTickDelta(),
+				(e.lastRenderY + (e.getY() - e.lastRenderY) * mc.getTickDelta()) + e.getHeight(),
+				e.lastRenderZ + (e.getZ() - e.lastRenderZ) * mc.getTickDelta());
 	}
 	
 	public float[] getColorByDistance(final Entity entity) {

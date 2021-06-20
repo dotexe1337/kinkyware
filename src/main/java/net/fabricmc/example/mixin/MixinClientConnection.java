@@ -40,6 +40,14 @@ public class MixinClientConnection implements ClientSupport {
 					HackSupport.nofall = !HackSupport.nofall;
 					mc.inGameHud.getChatHud().addMessage(new LiteralText("NoFall: " + (HackSupport.nofall ? "\247a" : "\247c") + HackSupport.nofall));
 				}
+				else if(split[0].equalsIgnoreCase("esp")) {
+					HackSupport.esp = !HackSupport.esp;
+					mc.inGameHud.getChatHud().addMessage(new LiteralText("ESP: " + (HackSupport.esp ? "\247a" : "\247c") + HackSupport.esp));
+				}
+				else if(split[0].equalsIgnoreCase("tracers")) {
+					HackSupport.tracers = !HackSupport.tracers;
+					mc.inGameHud.getChatHud().addMessage(new LiteralText("Tracers: " + (HackSupport.tracers ? "\247a" : "\247c") + HackSupport.tracers));
+				}
 				else if(split[0].equalsIgnoreCase("fly")) {
 					if(split[1].equalsIgnoreCase("speed")) {
 						try {

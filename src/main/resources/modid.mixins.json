@@ -12,7 +12,8 @@
     "MixinClientWorld",
     "TextVisitFactoryMixin",
     "MixinClientConnection",
-    "MixinKeyboard"
+    "MixinKeyboard",
+    "MixinEntityRenderer"
   ],
   "injectors": {
     "defaultRequire": 1
