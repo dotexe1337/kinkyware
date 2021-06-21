@@ -45,7 +45,22 @@ public abstract class MixinPlayerEntity extends LivingEntity {
 				breakingSpeed *= 1.0F + (StatusEffectUtil.getHasteAmplifier(this) + 1) * 0.2F;
 			}
 
-			breakingSpeed *= (float) 1.3f;
+			breakingSpeed *= (float) 1.5f;
+
+			ci.setReturnValue(breakingSpeed);
+		} else {
+			float breakingSpeed = inventory.getBlockBreakingSpeed(block);
+			if (breakingSpeed > 1.0F) {
+				int eff = EnchantmentHelper.getEfficiency(this);
+				ItemStack itemStack_1 = this.getMainHandStack();
+				if (eff > 0 && !itemStack_1.isEmpty()) {
+					breakingSpeed += eff * eff + 1;
+				}
+			}
+
+			if (StatusEffectUtil.hasHaste(this)) {
+				breakingSpeed *= 1.0F + (StatusEffectUtil.getHasteAmplifier(this) + 1) * 0.2F;
+			}
 
 			ci.setReturnValue(breakingSpeed);
 		}
