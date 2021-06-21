@@ -11,6 +11,7 @@ import net.fabricmc.example.HackSupport;
 import net.fabricmc.example.utils.BlockUtils;
 import net.fabricmc.example.utils.PlayerUtils;
 import net.minecraft.block.AirBlock;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.PlantBlock;
 import net.minecraft.block.RedstoneTorchBlock;
 import net.minecraft.block.RedstoneWireBlock;
@@ -19,8 +20,14 @@ import net.minecraft.block.SugarCaneBlock;
 import net.minecraft.block.TorchBlock;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.EntityPose;
+import net.minecraft.network.packet.c2s.play.HandSwingC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3i;
+import net.minecraft.util.shape.VoxelShape;
 
 @Mixin(ClientWorld.class)
 public class MixinClientWorld implements ClientSupport {
@@ -44,8 +51,8 @@ public class MixinClientWorld implements ClientSupport {
 					for(int k = minZ; k < maxZ; k++)
 					{
 						if(BlockUtils.getBlock(i, j, k) instanceof TorchBlock || BlockUtils.getBlock(i, j, k) instanceof RedstoneWireBlock || BlockUtils.getBlock(i, j, k) instanceof RedstoneTorchBlock || BlockUtils.getBlock(i, j, k) instanceof PlantBlock || BlockUtils.getBlock(i, j, k) instanceof SugarCaneBlock || BlockUtils.getBlock(i, j, k) instanceof SaplingBlock) {
-							if(Client.torchTimer.hasPassed(35)) {
-								mc.interactionManager.breakBlock(new BlockPos(i, j, k));
+							if(Client.torchTimer.hasPassed(150)) {
+								BlockUtils.breakOneBlock(i, j, k);
 								Client.torchTimer.updateLastTime();
 							}
 						}
