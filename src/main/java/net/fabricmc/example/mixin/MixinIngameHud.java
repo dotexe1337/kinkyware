@@ -53,7 +53,7 @@ public class MixinIngameHud implements ClientSupport {
 			List<PlayerEntity> entities = new ArrayList<PlayerEntity>();
 			for(Entity e: mc.world.getEntities()) {
 				
-				if(e instanceof PlayerEntity && e != mc.player && e != mc.cameraEntity) {
+				if(e instanceof PlayerEntity && e != mc.player && e != mc.cameraEntity && !((PlayerEntity) e).getGameProfile().getName().equalsIgnoreCase(mc.getSession().getUsername())) {
 					PlayerEntity pe = (PlayerEntity) e;
 					entities.add(pe);
 				}
