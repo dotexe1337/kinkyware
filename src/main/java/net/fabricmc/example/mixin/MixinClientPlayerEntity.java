@@ -64,37 +64,13 @@ public class MixinClientPlayerEntity extends AbstractClientPlayerEntity implemen
 
 	@Inject(method = "move", at = @At("HEAD"), cancellable = true)
 	public void move(MovementType type, Vec3d movement, CallbackInfo info) {
-		if(HackSupport.speed) {
-			if(PlayerUtils.isMoving())
-				PlayerUtils.setSpeed(HackSupport.speedSpeed);
-			else
-				PlayerUtils.setSpeed(0.0f);
-		}
 		if(HackSupport.step) {
 			mc.player.stepHeight = 1f;
 		} else {
-			mc.player.stepHeight = 0.5f;
+			mc.player.stepHeight = 0.75f;
 		}
 		if(HackSupport.freecam) {
 			mc.player.noClip = true;
-		}
-		if(HackSupport.killAura) {
-			for(Entity e: mc.world.getEntities()) {
-				if(e instanceof PlayerEntity) {
-					PlayerEntity pe = (PlayerEntity) e;
-					if(pe.distanceTo(mc.player) <= 6 && mc.player.getAttackCooldownProgress(0.0f) >= 1.0f && pe != mc.player && pe != mc.cameraEntity && !Client.friends.isFriend(pe.getName().getString())) {
-						boolean wasSprinting = mc.player.isSprinting();
-						if (wasSprinting)
-							mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, Mode.STOP_SPRINTING));
-						
-						mc.interactionManager.attackEntity(mc.player, pe);
-						mc.player.swingHand(Hand.MAIN_HAND);
-						
-						if (wasSprinting)
-							mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, Mode.START_SPRINTING));
-					}
-				}
-			}
 		}
 	}
 	

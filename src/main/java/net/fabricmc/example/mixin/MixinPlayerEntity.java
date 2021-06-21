@@ -45,7 +45,7 @@ public abstract class MixinPlayerEntity extends LivingEntity {
 				breakingSpeed *= 1.0F + (StatusEffectUtil.getHasteAmplifier(this) + 1) * 0.2F;
 			}
 
-			breakingSpeed *= (float) 2;
+			breakingSpeed *= (float) 1.3f;
 
 			ci.setReturnValue(breakingSpeed);
 		}

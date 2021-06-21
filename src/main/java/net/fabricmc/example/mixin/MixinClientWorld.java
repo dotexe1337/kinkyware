@@ -11,7 +11,6 @@ import net.fabricmc.example.HackSupport;
 import net.fabricmc.example.utils.BlockUtils;
 import net.fabricmc.example.utils.PlayerUtils;
 import net.minecraft.block.AirBlock;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.PlantBlock;
 import net.minecraft.block.RedstoneTorchBlock;
 import net.minecraft.block.RedstoneWireBlock;
@@ -19,15 +18,14 @@ import net.minecraft.block.SaplingBlock;
 import net.minecraft.block.SugarCaneBlock;
 import net.minecraft.block.TorchBlock;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityPose;
-import net.minecraft.network.packet.c2s.play.HandSwingC2SPacket;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
+import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket.Mode;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3i;
-import net.minecraft.util.shape.VoxelShape;
 
 @Mixin(ClientWorld.class)
 public class MixinClientWorld implements ClientSupport {
@@ -52,8 +50,10 @@ public class MixinClientWorld implements ClientSupport {
 					{
 						if(BlockUtils.getBlock(i, j, k) instanceof TorchBlock || BlockUtils.getBlock(i, j, k) instanceof RedstoneWireBlock || BlockUtils.getBlock(i, j, k) instanceof RedstoneTorchBlock || BlockUtils.getBlock(i, j, k) instanceof PlantBlock || BlockUtils.getBlock(i, j, k) instanceof SugarCaneBlock || BlockUtils.getBlock(i, j, k) instanceof SaplingBlock) {
 							if(Client.torchTimer.hasPassed(75)) {
-								BlockUtils.breakOneBlock(i, j, k);
-								Client.torchTimer.updateLastTime();
+								if(mc.player.getPos().distanceTo(new Vec3d(i, j, k)) <= 5) {
+									BlockUtils.breakOneBlock(i, j, k);
+									Client.torchTimer.updateLastTime();
+								}
 							}
 						}
 					}
@@ -97,6 +97,30 @@ public class MixinClientWorld implements ClientSupport {
 			} else {
 				if(BlockUtils.getBlock(mc.player.getPos().getX(), mc.player.getPos().getY() + 0.069, mc.player.getPos().getZ()) instanceof AirBlock) {
 					mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() + 0.069, mc.player.getZ(), true));
+				}
+			}
+		}
+		if(HackSupport.speed) {
+			if(PlayerUtils.isMoving())
+				PlayerUtils.setSpeed(HackSupport.speedSpeed);
+			else
+				PlayerUtils.setSpeed(0.0f);
+		}
+		if(HackSupport.killAura) {
+			for(Entity e: mc.world.getEntities()) {
+				if(e instanceof PlayerEntity) {
+					PlayerEntity pe = (PlayerEntity) e;
+					if(pe.distanceTo(mc.player) <= 6 && mc.player.getAttackCooldownProgress(0.0f) >= 1.0f && pe != mc.player && pe != mc.cameraEntity && !Client.friends.isFriend(pe.getName().getString())) {
+						boolean wasSprinting = mc.player.isSprinting();
+						if (wasSprinting)
+							mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, Mode.STOP_SPRINTING));
+						
+						mc.interactionManager.attackEntity(mc.player, pe);
+						mc.player.swingHand(Hand.MAIN_HAND);
+						
+						if (wasSprinting)
+							mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, Mode.START_SPRINTING));
+					}
 				}
 			}
 		}

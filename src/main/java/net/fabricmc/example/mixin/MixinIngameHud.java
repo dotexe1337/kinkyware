@@ -1,22 +1,22 @@
 package net.fabricmc.example.mixin;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-
+import net.fabricmc.example.Client;
 import net.fabricmc.example.ClientSupport;
 import net.fabricmc.example.HackSupport;
 import net.minecraft.client.gui.hud.InGameHud;
-import net.minecraft.client.render.BufferBuilder;
-import net.minecraft.client.render.BufferRenderer;
-import net.minecraft.client.render.Tessellator;
-import net.minecraft.client.render.VertexFormat;
-import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.Matrix4f;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.MathHelper;
 
 @Mixin(InGameHud.class)
 public class MixinIngameHud implements ClientSupport {
@@ -27,7 +27,7 @@ public class MixinIngameHud implements ClientSupport {
 			matrixStack.push();
 			matrixStack.scale(0.5f, 0.5f, 0.5f);
 			
-			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Kinkyware \2477v0.0.4", 2, 2, 0xffffffff);
+			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "\247oKinkyware \2477v0.0.4", 2, 2, 0xffffffff);
 			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "flyHSpeed: \247e" + HackSupport.flyHSpeed, 2, 12, 0xffffffff);
 			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "flyVSpeed: \247e" + HackSupport.flyVSpeed, 2, 22, 0xffffffff);
 			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "speedSpeed: \247e" + HackSupport.speedSpeed, 2, 32, 0xffffffff);
@@ -49,6 +49,28 @@ public class MixinIngameHud implements ClientSupport {
 			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "SpeedMine: " + (HackSupport.speedMine ? "\247a" : "\247c") + HackSupport.speedMine, 2, 192, 0xffffffff);
 			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Torch: " + (HackSupport.torch ? "\247a" : "\247c") + HackSupport.torch, 2, 202, 0xffffffff);
 			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "KillAura: " + (HackSupport.killAura ? "\247a" : "\247c") + HackSupport.killAura, 2, 212, 0xffffffff);
+			
+			List<PlayerEntity> entities = new ArrayList<PlayerEntity>();
+			for(Entity e: mc.world.getEntities()) {
+				
+				if(e instanceof PlayerEntity && e != mc.player && e != mc.cameraEntity) {
+					PlayerEntity pe = (PlayerEntity) e;
+					entities.add(pe);
+				}
+			}
+			entities.sort(new Comparator<PlayerEntity>() {
+				public int compare(PlayerEntity m1, PlayerEntity m2) {
+		            float f1 = m1.distanceTo(mc.player);
+		            float f2 = m2.distanceTo(mc.player);
+		            return Float.compare(f1, f2);
+		        }
+			});
+			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "\2478\247l\247oPlayer List:", mc.getWindow().getScaledWidth() - mc.inGameHud.getFontRenderer().getWidth("Player List:") - 2, 2, 0xffffffff);
+			int y = 12;
+			for(PlayerEntity pe: entities) {
+				mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, Client.friends.isFriend(pe.getName().getString()) ? "\2479" + Client.friends.getAliasName(pe.getName().getString()) + " \2477(D: " + MathHelper.floor(pe.distanceTo(mc.player)) + ", XYZ: " + (MathHelper.floor(pe.getPos().getX()) + " / " + MathHelper.floor(pe.getPos().getY()) + " / " + MathHelper.floor(pe.getPos().getZ())) + ")" : ((pe.distanceTo(mc.player) >= 64) ? "\2472" : (pe.isSneaking() ? "\2474" : "\247f")) + pe.getName().getString() + " \2477(D: " + MathHelper.floor(pe.distanceTo(mc.player)) + ", XYZ: " + (MathHelper.floor(pe.getPos().getX()) + " / " + MathHelper.floor(pe.getPos().getY()) + " / " + MathHelper.floor(pe.getPos().getZ())) + ")", mc.getWindow().getScaledWidth() - mc.inGameHud.getFontRenderer().getWidth(pe.getName() + " \2477(D: " + MathHelper.floor(pe.distanceTo(mc.player)) + ")") - 2, y, 0xffffffff);
+				y+=10;
+			}
 			
 			matrixStack.pop();
 		}
