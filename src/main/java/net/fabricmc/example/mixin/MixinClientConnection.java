@@ -64,10 +64,28 @@ public class MixinClientConnection implements ClientSupport {
 					HackSupport.torch = !HackSupport.torch;
 					mc.inGameHud.getChatHud().addMessage(new LiteralText("Torch: " + (HackSupport.torch ? "\247a" : "\247c") + HackSupport.torch));
 				}
-				else if(split[0].equalsIgnoreCase("flyspeed")) {
+				else if(split[0].equalsIgnoreCase("flyhspeed")) {
 					try {
-						HackSupport.flySpeed = Float.parseFloat(split[1]);
-						mc.inGameHud.getChatHud().addMessage(new LiteralText("flySpeed: \247e" + HackSupport.flySpeed));
+						HackSupport.flyHSpeed = Float.parseFloat(split[1]);
+						mc.inGameHud.getChatHud().addMessage(new LiteralText("flyHSpeed: \247e" + HackSupport.flyHSpeed));
+					} catch (Exception e) { }
+				}
+				else if(split[0].equalsIgnoreCase("flyvspeed")) {
+					try {
+						HackSupport.flyVSpeed = Float.parseFloat(split[1]);
+						mc.inGameHud.getChatHud().addMessage(new LiteralText("flyVSpeed: \247e" + HackSupport.flyVSpeed));
+					} catch (Exception e) { }
+				}
+				else if(split[0].equalsIgnoreCase("freecamhspeed")) {
+					try {
+						HackSupport.freecamHSpeed = Float.parseFloat(split[1]);
+						mc.inGameHud.getChatHud().addMessage(new LiteralText("freecamHSpeed: \247e" + HackSupport.freecamHSpeed));
+					} catch (Exception e) { }
+				}
+				else if(split[0].equalsIgnoreCase("freecamvspeed")) {
+					try {
+						HackSupport.freecamVSpeed = Float.parseFloat(split[1]);
+						mc.inGameHud.getChatHud().addMessage(new LiteralText("freecamVSpeed: \247e" + HackSupport.freecamVSpeed));
 					} catch (Exception e) { }
 				}
 				else if(split[0].equalsIgnoreCase("speedspeed")) {

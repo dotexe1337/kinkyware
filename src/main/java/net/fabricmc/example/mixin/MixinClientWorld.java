@@ -69,24 +69,24 @@ public class MixinClientWorld implements ClientSupport {
 			mc.player.setOnGround(false);
 			mc.player.setPose(EntityPose.STANDING);
 			if(mc.player.input.jumping) {
-				mc.player.setVelocity(mc.player.getVelocity().getX(), 1f, mc.player.getVelocity().getZ());
+				mc.player.setVelocity(mc.player.getVelocity().getX(), HackSupport.freecamVSpeed, mc.player.getVelocity().getZ());
 			} else if(mc.player.input.sneaking) {
-				mc.player.setVelocity(mc.player.getVelocity().getX(), -1f, mc.player.getVelocity().getZ());
+				mc.player.setVelocity(mc.player.getVelocity().getX(), -HackSupport.freecamVSpeed, mc.player.getVelocity().getZ());
 			} else {
 				mc.player.setVelocity(mc.player.getVelocity().getX(), 0f, mc.player.getVelocity().getZ());
 			}
-			PlayerUtils.setSpeed(HackSupport.flySpeed);
+			PlayerUtils.setSpeed(HackSupport.freecamHSpeed);
 		}
 		if(HackSupport.flight) {
 			if(mc.player.input.jumping) {
-				mc.player.setVelocity(mc.player.getVelocity().getX(), 1f, mc.player.getVelocity().getZ());
+				mc.player.setVelocity(mc.player.getVelocity().getX(), HackSupport.flyVSpeed, mc.player.getVelocity().getZ());
 			} else if(mc.player.input.sneaking) {
-				mc.player.setVelocity(mc.player.getVelocity().getX(), -1f, mc.player.getVelocity().getZ());
+				mc.player.setVelocity(mc.player.getVelocity().getX(), -HackSupport.flyVSpeed, mc.player.getVelocity().getZ());
 			} else {
 				mc.player.setVelocity(mc.player.getVelocity().getX(), 0f, mc.player.getVelocity().getZ());
 			}
 			if(PlayerUtils.isMoving() && !mc.player.input.sneaking)
-				PlayerUtils.setSpeed(HackSupport.flySpeed);
+				PlayerUtils.setSpeed(HackSupport.flyHSpeed);
 			else
 				PlayerUtils.setSpeed(0.0f);
 			if(Client.flyTimer.hasPassed(75)) {

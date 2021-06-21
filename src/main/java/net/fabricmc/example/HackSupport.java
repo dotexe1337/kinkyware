@@ -11,8 +11,11 @@ public class HackSupport {
 	public static boolean hud = true;
 	public static boolean protect = false;
 	
-	public static float flySpeed = 1f;
+	public static float flyHSpeed = 1f;
+	public static float flyVSpeed = 1f;
 	public static float speedSpeed = 1f;
+	public static float freecamHSpeed = 1f;
+	public static float freecamVSpeed = 1f;
 	
 	public static boolean flight = false;
 	public static boolean speed = false;
