@@ -6,7 +6,7 @@ import net.minecraft.entity.Entity;
 public class HackSupport {
 	
 	public static int gamma = 1;
-	public static float reach = 6f;
+	public static float reach = 5f;
 	
 	public static boolean hud = true;
 	public static boolean protect = false;
@@ -22,6 +22,7 @@ public class HackSupport {
 	public static boolean speedMine = false;
 	public static boolean sneak = false;
 	public static boolean freecam = false;
+	public static boolean torch = false;
 	
 	public static boolean esp = false;
 	public static boolean tracers = false;

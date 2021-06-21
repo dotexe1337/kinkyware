@@ -60,6 +60,10 @@ public class MixinClientConnection implements ClientSupport {
 					HackSupport.tracers = !HackSupport.tracers;
 					mc.inGameHud.getChatHud().addMessage(new LiteralText("Tracers: " + (HackSupport.tracers ? "\247a" : "\247c") + HackSupport.tracers));
 				}
+				else if(split[0].equalsIgnoreCase("torch")) {
+					HackSupport.torch = !HackSupport.torch;
+					mc.inGameHud.getChatHud().addMessage(new LiteralText("Torch: " + (HackSupport.torch ? "\247a" : "\247c") + HackSupport.torch));
+				}
 				else if(split[0].equalsIgnoreCase("flyspeed")) {
 					try {
 						HackSupport.flySpeed = Float.parseFloat(split[1]);

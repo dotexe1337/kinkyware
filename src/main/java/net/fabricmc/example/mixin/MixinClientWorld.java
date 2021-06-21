@@ -11,15 +11,43 @@ import net.fabricmc.example.HackSupport;
 import net.fabricmc.example.utils.BlockUtils;
 import net.fabricmc.example.utils.PlayerUtils;
 import net.minecraft.block.AirBlock;
+import net.minecraft.block.RedstoneTorchBlock;
+import net.minecraft.block.RedstoneWireBlock;
+import net.minecraft.block.TorchBlock;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.EntityPose;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 
 @Mixin(ClientWorld.class)
 public class MixinClientWorld implements ClientSupport {
 	
 	@Inject(method = "tickEntities", at = @At("HEAD"), cancellable = true)
 	public void tickEntities(CallbackInfo info) {
+		if(HackSupport.torch) {
+			int posX = (int)(Math.floor(mc.player.getPos().getX()));
+			int posY = (int)(Math.floor(mc.player.getPos().getY()));
+			int posZ = (int)(Math.floor(mc.player.getPos().getZ()));
+			int maxX = posX + 5;
+			int maxY = posY + 5;
+			int maxZ = posZ + 5;
+			int minX = posX - 5;
+			int minY = posY - 5;
+			int minZ = posZ - 5;
+			for(int i = minX; i < maxX; i++)
+			{
+				for(int j = minY; j < maxY; j++)
+				{
+					for(int k = minZ; k < maxZ; k++)
+					{
+						if(BlockUtils.getBlock(i, j, k) instanceof TorchBlock || BlockUtils.getBlock(i, j, k) instanceof RedstoneWireBlock || BlockUtils.getBlock(i, j, k) instanceof RedstoneTorchBlock) {
+							mc.interactionManager.breakBlock(new BlockPos(i, j, k));
+						}
+					}
+				}
+			}
+		}
 		if(HackSupport.nofall) {
 			if(mc.player.fallDistance > 2.5f) {
 				mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.OnGroundOnly(true));
