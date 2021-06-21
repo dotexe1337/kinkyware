@@ -25,7 +25,12 @@ public class MixinFluidRenderer {
 	@Inject(method = "isSideCovered(Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/Direction;F)Z", at = @At("HEAD"), cancellable = true)
 	private static void isSideCovered(BlockView world, BlockPos pos, Direction direction, float maxDeviation, CallbackInfoReturnable<Boolean> callback) {
 		if(HackSupport.xray) {
-			if (HackSupport.isVisible(world.getBlockState(pos).getBlock())) {
+			if (HackSupport.isVisibleXray(world.getBlockState(pos).getBlock())) {
+				callback.setReturnValue(false);
+			}
+		}
+		if(HackSupport.wallhack) {
+			if (HackSupport.isVisibleWallhack(world.getBlockState(pos).getBlock())) {
 				callback.setReturnValue(false);
 			}
 		}

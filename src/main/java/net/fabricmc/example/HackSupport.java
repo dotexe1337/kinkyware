@@ -36,11 +36,15 @@ public class HackSupport {
 	public static boolean xray = false;
 	public static boolean wallhack = false;
 	
-	public static boolean isVisible(Block block) {
+	public static boolean isVisibleXray(Block block) {
 		return xrayBlocks.contains(block);
+	}
+	public static boolean isVisibleWallhack(Block block) {
+		return wallhackBlocks.contains(block);
 	}
 	
 	public static List<Block> xrayBlocks = new ArrayList<>();
+	public static List<Block> wallhackBlocks = new ArrayList<>();
 	
 	/* Freecam */
 	public static PlayerCopyEntity dummy;

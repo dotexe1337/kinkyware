@@ -23,12 +23,14 @@ public class MixinBlockRenderManager {
 	@Inject(method = "renderBlock", at = @At("HEAD"), cancellable = true)
 	private void renderBlock_head(BlockState state, BlockPos pos, BlockRenderView world, MatrixStack matrix, VertexConsumer vertexConsumer, boolean cull, Random random, CallbackInfoReturnable<Boolean> ci) {
 		if(HackSupport.xray) {
-			if(!HackSupport.isVisible(state.getBlock())) {
+			if(!HackSupport.isVisibleXray(state.getBlock())) {
 				ci.setReturnValue(false);
 			}
 		}
 		else if(HackSupport.wallhack) {
-			ci.setReturnValue(false);
+			if(!HackSupport.isVisibleWallhack(state.getBlock())) {
+				ci.setReturnValue(false);
+			}
 		}
 	}
 
