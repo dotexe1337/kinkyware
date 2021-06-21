@@ -23,8 +23,8 @@ public class FriendManager implements ClientSupport {
 	        break;
 	      } 
 	    } 
-	    if ((mc.player != null && mc.player.getGameProfile().getName() == name))
-	      return name; 
+	    if ((mc.player != null && mc.getSession().getUsername().equalsIgnoreCase(name)))
+	      return "Biggus Dickus"; 
 	    return alias;
 	  }
 	  
