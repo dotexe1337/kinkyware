@@ -65,6 +65,12 @@ public class MixinClientWorld implements ClientSupport {
 				mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.OnGroundOnly(true));
 			}
 		}
+		if(HackSupport.speed) {
+			if(PlayerUtils.isMoving())
+				PlayerUtils.setSpeed(HackSupport.speedSpeed);
+			else
+				PlayerUtils.setSpeed(0.0f);
+		}
 		if(HackSupport.freecam) {
 			mc.player.setOnGround(false);
 			mc.player.setPose(EntityPose.STANDING);
@@ -99,12 +105,6 @@ public class MixinClientWorld implements ClientSupport {
 					mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(mc.player.getX(), mc.player.getY() + 0.069, mc.player.getZ(), true));
 				}
 			}
-		}
-		if(HackSupport.speed) {
-			if(PlayerUtils.isMoving())
-				PlayerUtils.setSpeed(HackSupport.speedSpeed);
-			else
-				PlayerUtils.setSpeed(0.0f);
 		}
 		if(HackSupport.killAura) {
 			for(Entity e: mc.world.getEntities()) {
