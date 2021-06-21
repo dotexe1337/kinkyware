@@ -58,26 +58,28 @@ public class MixinIngameHud implements ClientSupport {
 			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Torch: " + (HackSupport.torch ? "\247a" : "\247c") + HackSupport.torch, 2, 212, 0xffffffff);
 			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "KillAura: " + (HackSupport.killAura ? "\247a" : "\247c") + HackSupport.killAura, 2, 222, 0xffffffff);
 			
-			List<PlayerEntity> entities = new ArrayList<PlayerEntity>();
-			for(Entity e: mc.world.getEntities()) {
-				
-				if(e instanceof PlayerEntity && e != mc.player && e != mc.cameraEntity && !((PlayerEntity) e).getGameProfile().getName().equalsIgnoreCase(mc.getSession().getUsername())) {
-					PlayerEntity pe = (PlayerEntity) e;
-					entities.add(pe);
+			if(HackSupport.playerList) {
+				List<PlayerEntity> entities = new ArrayList<PlayerEntity>();
+				for(Entity e: mc.world.getEntities()) {
+					
+					if(e instanceof PlayerEntity && e != mc.player && e != mc.cameraEntity && !((PlayerEntity) e).getGameProfile().getName().equalsIgnoreCase(mc.getSession().getUsername())) {
+						PlayerEntity pe = (PlayerEntity) e;
+						entities.add(pe);
+					}
 				}
-			}
-			entities.sort(new Comparator<PlayerEntity>() {
-				public int compare(PlayerEntity m1, PlayerEntity m2) {
-		            float f1 = m1.distanceTo(mc.player);
-		            float f2 = m2.distanceTo(mc.player);
-		            return Float.compare(f1, f2);
-		        }
-			});
-			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "\2478\247l\247oPlayer List:", (mc.getWindow().getScaledWidth() * 2) - mc.inGameHud.getFontRenderer().getWidth("\2478\247l\247oPlayer List:") - 2, 2, 0xffffffff);
-			int y = 12;
-			for(PlayerEntity pe: entities) {
-				mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, ((pe.distanceTo(mc.player) >= 64) ? "\2472" : (pe.isSneaking() ? "\2474" : "\247f")) + pe.getName().getString() + " \2477(D: " + MathHelper.floor(pe.distanceTo(mc.player)) + ", XYZ: " + (MathHelper.floor(pe.getPos().getX()) + " / " + MathHelper.floor(pe.getPos().getY()) + " / " + MathHelper.floor(pe.getPos().getZ())) + ")", (mc.getWindow().getScaledWidth() * 2) - (mc.inGameHud.getFontRenderer().getWidth( ((pe.distanceTo(mc.player) >= 64) ? "\2472" : (pe.isSneaking() ? "\2474" : "\247f")) + pe.getName().getString() + " \2477(D: " + MathHelper.floor(pe.distanceTo(mc.player)) + ", XYZ: " + (MathHelper.floor(pe.getPos().getX()) + " / " + MathHelper.floor(pe.getPos().getY()) + " / " + MathHelper.floor(pe.getPos().getZ())) + ")")) - 2, y, 0xffffffff);
-				y+=10;
+				entities.sort(new Comparator<PlayerEntity>() {
+					public int compare(PlayerEntity m1, PlayerEntity m2) {
+			            float f1 = m1.distanceTo(mc.player);
+			            float f2 = m2.distanceTo(mc.player);
+			            return Float.compare(f1, f2);
+			        }
+				});
+				mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "\2478\247l\247oPlayer List:", (mc.getWindow().getScaledWidth() * 2) - mc.inGameHud.getFontRenderer().getWidth("\2478\247l\247oPlayer List:") - 2, 2, 0xffffffff);
+				int y = 12;
+				for(PlayerEntity pe: entities) {
+					mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, ((pe.distanceTo(mc.player) >= 64) ? "\2472" : (pe.isSneaking() ? "\2474" : "\247f")) + pe.getName().getString() + " \2477(D: " + MathHelper.floor(pe.distanceTo(mc.player)) + ", XYZ: " + (MathHelper.floor(pe.getPos().getX()) + " / " + MathHelper.floor(pe.getPos().getY()) + " / " + MathHelper.floor(pe.getPos().getZ())) + ")", (mc.getWindow().getScaledWidth() * 2) - (mc.inGameHud.getFontRenderer().getWidth( ((pe.distanceTo(mc.player) >= 64) ? "\2472" : (pe.isSneaking() ? "\2474" : "\247f")) + pe.getName().getString() + " \2477(D: " + MathHelper.floor(pe.distanceTo(mc.player)) + ", XYZ: " + (MathHelper.floor(pe.getPos().getX()) + " / " + MathHelper.floor(pe.getPos().getY()) + " / " + MathHelper.floor(pe.getPos().getZ())) + ")")) - 2, y, 0xffffffff);
+					y+=10;
+				}
 			}
 			
 			matrixStack.pop();

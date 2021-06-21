@@ -44,6 +44,10 @@ public class MixinClientConnection implements ClientSupport {
 					HackSupport.scoreboard = !HackSupport.scoreboard;
 					mc.inGameHud.getChatHud().addMessage(new LiteralText("Scoreboard: " + (HackSupport.scoreboard ? "\247a" : "\247c") + HackSupport.scoreboard));
 				}
+				else if(split[0].equalsIgnoreCase("playerlist")) {
+					HackSupport.playerList = !HackSupport.playerList;
+					mc.inGameHud.getChatHud().addMessage(new LiteralText("playerList: " + (HackSupport.playerList ? "\247a" : "\247c") + HackSupport.playerList));
+				}
 				else if(split[0].equalsIgnoreCase("step")) {
 					HackSupport.step = !HackSupport.step;
 					mc.inGameHud.getChatHud().addMessage(new LiteralText("Step: " + (HackSupport.step ? "\247a" : "\247c") + HackSupport.step));

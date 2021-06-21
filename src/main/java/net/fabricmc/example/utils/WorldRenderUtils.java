@@ -48,12 +48,12 @@ public class WorldRenderUtils implements ClientSupport {
 
 		if (fill) {
 			int opacity = (int) (MinecraftClient.getInstance().options.getTextBackgroundOpacity(0.25F) * 255.0F) << 24;
-			mc.textRenderer.draw(text, -halfWidth, 0f, 553648127, false, matrix.peek().getModel(), immediate, true, opacity, 0xf000f0);
+			mc.textRenderer.draw(text, -halfWidth, 0f, 553648127, true, matrix.peek().getModel(), immediate, true, opacity, 0xf000f0);
 			immediate.draw();
 		} else {
 			matrix.push();
 			matrix.translate(1, 1, 0);
-			mc.textRenderer.draw(text.copy(), -halfWidth, 0f, 0x202020, false, matrix.peek().getModel(), immediate, true, 0, 0xf000f0);
+			mc.textRenderer.draw(text.copy(), -halfWidth, 0f, 0x202020, true, matrix.peek().getModel(), immediate, true, 0, 0xf000f0);
 			immediate.draw();
 			matrix.pop();
 		}

@@ -10,6 +10,7 @@ import net.minecraft.entity.Entity;
 public class HackSupport {
 	
 	public static boolean scoreboard = true;
+	public static boolean playerList = false;
 	
 	public static int gamma = 1;
 	public static float reach = 5f;
