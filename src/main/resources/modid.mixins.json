@@ -21,7 +21,9 @@
     "MixinBlock",
     "MixinFluidRenderer",
     "MixinRenderLayers",
-    "MixinBlockRenderManager"
+    "MixinBlockRenderManager",
+    "PlayerListEntryMixin",
+    "CapeFeatureRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -47,14 +47,15 @@ public class FriendManager implements ClientSupport {
 	  
 	  public static boolean isFriend(String name) {
 	    boolean isFriend = false;
+	    if (mc.getSession().getUsername().equalsIgnoreCase(StringUtils.stripControlCodes(name))) {
+		      return true;
+	    }
 	    for (Friend friend : friendsList) {
 	      if (friend.name.equalsIgnoreCase(StringUtils.stripControlCodes(name))) {
 	        isFriend = true;
 	        break;
 	      } 
 	    } 
-	    if (mc.player.getGameProfile().getName() == name)
-	      isFriend = true; 
 	    return isFriend;
 	  }
 	  
@@ -65,7 +66,7 @@ public class FriendManager implements ClientSupport {
 			
 			String me = mc.getSession().getUsername();
 			if(string.contains(me))
-				return string.replace(me, "\2479Biggus Dickus\247r");
+				string = string.replace(me, "\2479Biggus Dickus\247r");
 			
 			int i = 0;
 			for(PlayerListEntry info : mc.player.networkHandler.getPlayerList())
@@ -76,7 +77,7 @@ public class FriendManager implements ClientSupport {
 				
 				if(string.contains(name))
 					if(this.isFriend(name))
-						return string.replace(name, "\2479" + this.getAliasName(name) + "\247r");
+						string = string.replace(name, "\2479" + this.getAliasName(name) + "\247r");
 			}
 			
 			for(AbstractClientPlayerEntity player : mc.world.getPlayers())
@@ -86,7 +87,7 @@ public class FriendManager implements ClientSupport {
 				
 				if(string.contains(name))
 					if(this.isFriend(name))
-						return string.replace(name, "\2479" + this.getAliasName(name) + "\247r");
+						string = string.replace(name, "\2479" + this.getAliasName(name) + "\247r");
 			}
 			
 			return string;

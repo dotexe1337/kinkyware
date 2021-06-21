@@ -17,6 +17,7 @@ import net.minecraft.block.RedstoneWireBlock;
 import net.minecraft.block.SaplingBlock;
 import net.minecraft.block.SugarCaneBlock;
 import net.minecraft.block.TorchBlock;
+import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityPose;
