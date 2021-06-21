@@ -34,11 +34,15 @@ public class MixinClientConnection implements ClientSupport {
 			if((packet).getChatMessage().startsWith("$")) {
 				callback.cancel();
 				String[] split = (packet).getChatMessage().substring(1).split(" ");
-				if(split[0].equalsIgnoreCase("up")) {
+				if(split[0].equalsIgnoreCase("vclip")) {
 					try {
 						mc.player.setPos(mc.player.getPos().getX(), mc.player.getPos().getY() + Float.parseFloat(split[1]), mc.player.getPos().getZ());
 						mc.player.setPosition(mc.player.getPos().getX(), mc.player.getPos().getY() + Float.parseFloat(split[1]), mc.player.getPos().getZ());
 					} catch (Exception e) { }
+				}
+				else if(split[0].equalsIgnoreCase("scoreboard")) {
+					HackSupport.scoreboard = !HackSupport.scoreboard;
+					mc.inGameHud.getChatHud().addMessage(new LiteralText("Scoreboard: " + (HackSupport.scoreboard ? "\247a" : "\247c") + HackSupport.scoreboard));
 				}
 				else if(split[0].equalsIgnoreCase("step")) {
 					HackSupport.step = !HackSupport.step;

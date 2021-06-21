@@ -9,17 +9,24 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.fabricmc.example.Client;
 import net.fabricmc.example.ClientSupport;
 import net.fabricmc.example.HackSupport;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.scoreboard.ScoreboardObjective;
 import net.minecraft.util.math.MathHelper;
 
 @Mixin(InGameHud.class)
 public class MixinIngameHud implements ClientSupport {
+	
+	@Inject(method = "renderScoreboardSidebar", at = @At("HEAD"), cancellable = true)
+	public void renderScoreboardSidebar(MatrixStack matrices, ScoreboardObjective objective, CallbackInfo ci) {
+		if(!HackSupport.scoreboard) {
+			ci.cancel();
+		}
+	}
 	
 	@Inject(method = "render", at = @At("RETURN"), cancellable = true)
 	public void render(MatrixStack matrixStack, float tickDelta, CallbackInfo info) {
@@ -35,20 +42,21 @@ public class MixinIngameHud implements ClientSupport {
 			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "freecamVSpeed: \247e" + HackSupport.freecamVSpeed, 2, 52, 0xffffffff);
 			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "reach: \247e" + HackSupport.reach, 2, 62, 0xffffffff);
 			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "gamma: \247e" + HackSupport.gamma, 2, 72, 0xffffffff);
-			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Protect: " + (HackSupport.protect ? "\247a" : "\247c") + HackSupport.protect, 2, 82, 0xffffffff);
-			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "ESP: " + (HackSupport.esp ? "\247a" : "\247c") + HackSupport.esp, 2, 92, 0xffffffff);
-			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Tracers: " + (HackSupport.tracers ? "\247a" : "\247c") + HackSupport.tracers, 2, 102, 0xffffffff);
-			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "X-Ray: " + (HackSupport.xray ? "\247a" : "\247c") + HackSupport.xray, 2, 112, 0xffffffff);
-			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Wallhack: " + (HackSupport.wallhack ? "\247a" : "\247c") + HackSupport.wallhack, 2, 122, 0xffffffff);
-			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "NoFall: " + (HackSupport.nofall ? "\247a" : "\247c") + HackSupport.nofall, 2, 132, 0xffffffff);
-			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Step: " + (HackSupport.step ? "\247a" : "\247c") + HackSupport.step, 2, 142, 0xffffffff);
-			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Flight: " + (HackSupport.flight ? "\247a" : "\247c") + HackSupport.flight, 2, 152, 0xffffffff);
-			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Speed: " + (HackSupport.speed ? "\247a" : "\247c") + HackSupport.speed, 2, 162, 0xffffffff);
-			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Sneak: " + (HackSupport.sneak ? "\247a" : "\247c") + HackSupport.sneak, 2, 172, 0xffffffff);
-			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Freecam: " + (HackSupport.freecam ? "\247a" : "\247c") + HackSupport.freecam, 2, 182, 0xffffffff);
-			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "SpeedMine: " + (HackSupport.speedMine ? "\247a" : "\247c") + HackSupport.speedMine, 2, 192, 0xffffffff);
-			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Torch: " + (HackSupport.torch ? "\247a" : "\247c") + HackSupport.torch, 2, 202, 0xffffffff);
-			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "KillAura: " + (HackSupport.killAura ? "\247a" : "\247c") + HackSupport.killAura, 2, 212, 0xffffffff);
+			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Scoreboard: " + (HackSupport.scoreboard ? "\247a" : "\247c") + HackSupport.scoreboard, 2, 82, 0xffffffff);
+			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Protect: " + (HackSupport.protect ? "\247a" : "\247c") + HackSupport.protect, 2, 92, 0xffffffff);
+			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "ESP: " + (HackSupport.esp ? "\247a" : "\247c") + HackSupport.esp, 2, 102, 0xffffffff);
+			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Tracers: " + (HackSupport.tracers ? "\247a" : "\247c") + HackSupport.tracers, 2, 112, 0xffffffff);
+			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "X-Ray: " + (HackSupport.xray ? "\247a" : "\247c") + HackSupport.xray, 2, 122, 0xffffffff);
+			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Wallhack: " + (HackSupport.wallhack ? "\247a" : "\247c") + HackSupport.wallhack, 2, 132, 0xffffffff);
+			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "NoFall: " + (HackSupport.nofall ? "\247a" : "\247c") + HackSupport.nofall, 2, 142, 0xffffffff);
+			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Step: " + (HackSupport.step ? "\247a" : "\247c") + HackSupport.step, 2, 152, 0xffffffff);
+			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Flight: " + (HackSupport.flight ? "\247a" : "\247c") + HackSupport.flight, 2, 162, 0xffffffff);
+			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Speed: " + (HackSupport.speed ? "\247a" : "\247c") + HackSupport.speed, 2, 172, 0xffffffff);
+			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Sneak: " + (HackSupport.sneak ? "\247a" : "\247c") + HackSupport.sneak, 2, 182, 0xffffffff);
+			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Freecam: " + (HackSupport.freecam ? "\247a" : "\247c") + HackSupport.freecam, 2, 192, 0xffffffff);
+			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "SpeedMine: " + (HackSupport.speedMine ? "\247a" : "\247c") + HackSupport.speedMine, 2, 202, 0xffffffff);
+			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Torch: " + (HackSupport.torch ? "\247a" : "\247c") + HackSupport.torch, 2, 212, 0xffffffff);
+			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "KillAura: " + (HackSupport.killAura ? "\247a" : "\247c") + HackSupport.killAura, 2, 222, 0xffffffff);
 			
 			List<PlayerEntity> entities = new ArrayList<PlayerEntity>();
 			for(Entity e: mc.world.getEntities()) {
