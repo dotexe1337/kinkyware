@@ -15,11 +15,13 @@ public class Client implements ModInitializer {
 	public static FriendManager friends;
 	
 	public static Timer flyTimer;
+	public static Timer torchTimer;
 	
 	@Override
 	public void onInitialize() {
 		friends = new FriendManager();
 		flyTimer = new Timer();
+		torchTimer = new Timer();
 	}
 	
 }

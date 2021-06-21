@@ -44,7 +44,10 @@ public class MixinClientWorld implements ClientSupport {
 					for(int k = minZ; k < maxZ; k++)
 					{
 						if(BlockUtils.getBlock(i, j, k) instanceof TorchBlock || BlockUtils.getBlock(i, j, k) instanceof RedstoneWireBlock || BlockUtils.getBlock(i, j, k) instanceof RedstoneTorchBlock || BlockUtils.getBlock(i, j, k) instanceof PlantBlock || BlockUtils.getBlock(i, j, k) instanceof SugarCaneBlock || BlockUtils.getBlock(i, j, k) instanceof SaplingBlock) {
-							mc.interactionManager.breakBlock(new BlockPos(i, j, k));
+							if(Client.torchTimer.hasPassed(35)) {
+								mc.interactionManager.breakBlock(new BlockPos(i, j, k));
+								Client.torchTimer.updateLastTime();
+							}
 						}
 					}
 				}
