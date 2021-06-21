@@ -13,7 +13,6 @@ import net.fabricmc.example.HackSupport;
 import net.fabricmc.example.utils.PlayerUtils;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MovementType;
@@ -53,6 +52,13 @@ public class MixinClientPlayerEntity extends AbstractClientPlayerEntity implemen
 		if(HackSupport.sneak) {
 			sendSneakPacket(Mode.RELEASE_SHIFT_KEY);
 			sendSneakPacket(Mode.PRESS_SHIFT_KEY);
+		}
+	}
+	
+	@Inject(method = "pushOutOfBlocks", at = @At("HEAD"), cancellable = true)
+	public void pushOutOfBlocks(double x, double z, CallbackInfo ci) {
+		if(HackSupport.freecam) {
+			ci.cancel();
 		}
 	}
 

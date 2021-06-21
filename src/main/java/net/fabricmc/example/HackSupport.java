@@ -1,6 +1,10 @@
 package net.fabricmc.example;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.fabricmc.example.utils.PlayerCopyEntity;
+import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 
 public class HackSupport {
@@ -29,6 +33,14 @@ public class HackSupport {
 	
 	public static boolean esp = false;
 	public static boolean tracers = false;
+	public static boolean xray = false;
+	public static boolean wallhack = false;
+	
+	public static boolean isVisible(Block block) {
+		return xrayBlocks.contains(block);
+	}
+	
+	public static List<Block> xrayBlocks = new ArrayList<>();
 	
 	/* Freecam */
 	public static PlayerCopyEntity dummy;

@@ -100,7 +100,11 @@ public class MixinClientWorld implements ClientSupport {
 				}
 			}
 		}
-		mc.options.gamma = HackSupport.gamma;
+		if(HackSupport.xray || HackSupport.wallhack) {
+			mc.options.gamma = 99999;
+		} else {
+			mc.options.gamma = HackSupport.gamma;
+		}
 	}
 	
 }

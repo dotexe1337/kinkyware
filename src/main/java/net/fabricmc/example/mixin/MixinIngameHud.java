@@ -38,15 +38,17 @@ public class MixinIngameHud implements ClientSupport {
 			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Protect: " + (HackSupport.protect ? "\247a" : "\247c") + HackSupport.protect, 2, 82, 0xffffffff);
 			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "ESP: " + (HackSupport.esp ? "\247a" : "\247c") + HackSupport.esp, 2, 92, 0xffffffff);
 			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Tracers: " + (HackSupport.tracers ? "\247a" : "\247c") + HackSupport.tracers, 2, 102, 0xffffffff);
-			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "NoFall: " + (HackSupport.nofall ? "\247a" : "\247c") + HackSupport.nofall, 2, 112, 0xffffffff);
-			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Step: " + (HackSupport.step ? "\247a" : "\247c") + HackSupport.step, 2, 122, 0xffffffff);
-			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Flight: " + (HackSupport.flight ? "\247a" : "\247c") + HackSupport.flight, 2, 132, 0xffffffff);
-			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Speed: " + (HackSupport.speed ? "\247a" : "\247c") + HackSupport.speed, 2, 142, 0xffffffff);
-			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Sneak: " + (HackSupport.sneak ? "\247a" : "\247c") + HackSupport.sneak, 2, 152, 0xffffffff);
-			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Freecam: " + (HackSupport.freecam ? "\247a" : "\247c") + HackSupport.freecam, 2, 162, 0xffffffff);
-			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "SpeedMine: " + (HackSupport.speedMine ? "\247a" : "\247c") + HackSupport.speedMine, 2, 172, 0xffffffff);
-			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Torch: " + (HackSupport.torch ? "\247a" : "\247c") + HackSupport.torch, 2, 182, 0xffffffff);
-			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "KillAura: " + (HackSupport.killAura ? "\247a" : "\247c") + HackSupport.killAura, 2, 192, 0xffffffff);
+			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "X-Ray: " + (HackSupport.xray ? "\247a" : "\247c") + HackSupport.xray, 2, 112, 0xffffffff);
+			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Wallhack: " + (HackSupport.wallhack ? "\247a" : "\247c") + HackSupport.wallhack, 2, 122, 0xffffffff);
+			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "NoFall: " + (HackSupport.nofall ? "\247a" : "\247c") + HackSupport.nofall, 2, 132, 0xffffffff);
+			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Step: " + (HackSupport.step ? "\247a" : "\247c") + HackSupport.step, 2, 142, 0xffffffff);
+			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Flight: " + (HackSupport.flight ? "\247a" : "\247c") + HackSupport.flight, 2, 152, 0xffffffff);
+			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Speed: " + (HackSupport.speed ? "\247a" : "\247c") + HackSupport.speed, 2, 162, 0xffffffff);
+			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Sneak: " + (HackSupport.sneak ? "\247a" : "\247c") + HackSupport.sneak, 2, 172, 0xffffffff);
+			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Freecam: " + (HackSupport.freecam ? "\247a" : "\247c") + HackSupport.freecam, 2, 182, 0xffffffff);
+			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "SpeedMine: " + (HackSupport.speedMine ? "\247a" : "\247c") + HackSupport.speedMine, 2, 192, 0xffffffff);
+			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "Torch: " + (HackSupport.torch ? "\247a" : "\247c") + HackSupport.torch, 2, 202, 0xffffffff);
+			mc.inGameHud.getFontRenderer().drawWithShadow(matrixStack, "KillAura: " + (HackSupport.killAura ? "\247a" : "\247c") + HackSupport.killAura, 2, 212, 0xffffffff);
 			
 			matrixStack.pop();
 		}

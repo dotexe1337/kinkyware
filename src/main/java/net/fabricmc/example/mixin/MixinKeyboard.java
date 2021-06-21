@@ -37,11 +37,29 @@ public class MixinKeyboard implements ClientSupport {
 		case GLFW.GLFW_KEY_H:
 			HackSupport.speedMine = !HackSupport.speedMine;
 			break;
-		case GLFW.GLFW_KEY_Z:
+		case GLFW.GLFW_KEY_Y:
 			HackSupport.sneak = !HackSupport.sneak;
 			if(!HackSupport.sneak) {
 				sendSneakPacket(Mode.RELEASE_SHIFT_KEY);
 			}
+			break;
+		case GLFW.GLFW_KEY_X:
+			HackSupport.xray = !HackSupport.xray;
+			if(HackSupport.xray) {
+				mc.chunkCullingEnabled = false;
+			} else {
+				mc.chunkCullingEnabled = true;
+			}
+			mc.worldRenderer.reload();
+			break;
+		case GLFW.GLFW_KEY_Z:
+			HackSupport.wallhack = !HackSupport.wallhack;
+			if(HackSupport.wallhack) {
+				mc.chunkCullingEnabled = false;
+			} else {
+				mc.chunkCullingEnabled = true;
+			}
+			mc.worldRenderer.reload();
 			break;
 		case GLFW.GLFW_KEY_V:
 			HackSupport.freecam = !HackSupport.freecam;
