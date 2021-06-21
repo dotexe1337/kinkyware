@@ -108,7 +108,7 @@ public class MixinClientConnection implements ClientSupport {
 				}
 				else if (split[0].equalsIgnoreCase("add")) {
 				      String alias = split[1];
-				      if (split.length > 3) {
+				      if (split.length > 2) {
 				        alias = split[2];
 				        if (alias.startsWith("\"") && split[split.length - 1].endsWith("\"")) {
 				          alias = alias.substring(1, alias.length());

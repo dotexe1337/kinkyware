@@ -110,7 +110,7 @@ public class MixinWorldRenderer implements ClientSupport {
 					if(Client.friends.isFriend(((PlayerEntity)entity).getName().getString())) {
 						lines.add("\2479" + Client.friends.getAliasName(((PlayerEntity)entity).getName().getString()));
 					} else {
-						lines.add(((livingEntity.distanceTo(mc.player) >= 64 || !mc.player.canSee(livingEntity)) ? "\2472" : (livingEntity.isSneaking() ? "\2474" : "\247f")) + ((PlayerEntity)entity).getName().getString());
+						lines.add(((livingEntity.distanceTo(mc.player) >= 64) ? "\2472" : (livingEntity.isSneaking() ? "\2474" : "\247f")) + ((PlayerEntity)entity).getName().getString());
 					}
 					
 					scale = Math.max(2 * (mc.cameraEntity.distanceTo(entity) / 20), 1);
