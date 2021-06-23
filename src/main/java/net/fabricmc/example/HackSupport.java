@@ -14,6 +14,7 @@ public class HackSupport {
 	
 	public static int gamma = 1;
 	public static float reach = 5f;
+	public static float stepHeight = 0.75f;
 	
 	public static boolean hud = true;
 	public static boolean protect = false;
@@ -26,7 +27,6 @@ public class HackSupport {
 	
 	public static boolean flight = false;
 	public static boolean speed = false;
-	public static boolean step = false;
 	public static boolean nofall = false;
 	public static boolean killAura = false;
 	public static boolean speedMine = false;

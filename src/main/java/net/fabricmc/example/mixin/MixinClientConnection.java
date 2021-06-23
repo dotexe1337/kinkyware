@@ -48,10 +48,6 @@ public class MixinClientConnection implements ClientSupport {
 					HackSupport.playerList = !HackSupport.playerList;
 					mc.inGameHud.getChatHud().addMessage(new LiteralText("playerList: " + (HackSupport.playerList ? "\247a" : "\247c") + HackSupport.playerList));
 				}
-				else if(split[0].equalsIgnoreCase("step")) {
-					HackSupport.step = !HackSupport.step;
-					mc.inGameHud.getChatHud().addMessage(new LiteralText("Step: " + (HackSupport.step ? "\247a" : "\247c") + HackSupport.step));
-				}
 				else if(split[0].equalsIgnoreCase("protect")) {
 					HackSupport.protect = !HackSupport.protect;
 					mc.inGameHud.getChatHud().addMessage(new LiteralText("Protect: " + (HackSupport.protect ? "\247a" : "\247c") + HackSupport.protect));
@@ -112,6 +108,12 @@ public class MixinClientConnection implements ClientSupport {
 					try {
 						HackSupport.reach = Integer.parseInt(split[1]);
 						mc.inGameHud.getChatHud().addMessage(new LiteralText("reach: \247e" + HackSupport.reach));
+					} catch (Exception e) { }
+				}
+				else if(split[0].equalsIgnoreCase("stepHeight")) {
+					try {
+						HackSupport.stepHeight = Float.parseFloat(split[1]);
+						mc.inGameHud.getChatHud().addMessage(new LiteralText("stepHeight: \247e" + HackSupport.stepHeight));
 					} catch (Exception e) { }
 				}
 				else if (split[0].equalsIgnoreCase("add")) {

@@ -64,11 +64,7 @@ public class MixinClientPlayerEntity extends AbstractClientPlayerEntity implemen
 
 	@Inject(method = "move", at = @At("HEAD"), cancellable = true)
 	public void move(MovementType type, Vec3d movement, CallbackInfo info) {
-		if(HackSupport.step) {
-			mc.player.stepHeight = 1.5f;
-		} else {
-			mc.player.stepHeight = 0.75f;
-		}
+		mc.player.stepHeight = HackSupport.stepHeight;
 		if(HackSupport.freecam) {
 			mc.player.noClip = true;
 		}
