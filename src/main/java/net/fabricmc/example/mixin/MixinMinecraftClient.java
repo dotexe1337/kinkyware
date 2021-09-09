@@ -15,8 +15,8 @@ import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 @Mixin(MinecraftClient.class)
 public class MixinMinecraftClient implements ClientSupport {
 
-	@Inject(method = "openScreen", at = @At("HEAD"), cancellable = true)
-	public void openScreen(Screen screen, CallbackInfo info) {
+	@Inject(method = "setScreen", at = @At("HEAD"), cancellable = true)
+	public void setScreen(Screen screen, CallbackInfo info) {
 		if(HackSupport.freecam) {
 			if (screen instanceof InventoryScreen) {
 				mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.OPEN_INVENTORY));
