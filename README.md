@@ -1,7 +1,5 @@
-# This sucks.
+# Kinkyware
 
-It really does. I'm sick of Minecraft and really don't feel like putting effort into a client anymore.
+A "utility mod" for Minecraft 1.17. :^)
 
-# were da jar? i use wurst
-
-This is FOSS, bro! Just compile from source.
+This repository is licensed under the GNU General Public License (GPL) v2.0. For more information, please read LICENSE.md.
