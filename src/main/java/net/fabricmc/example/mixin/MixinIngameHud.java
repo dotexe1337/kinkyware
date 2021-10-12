@@ -34,7 +34,7 @@ public class MixinIngameHud implements ClientSupport {
 			matrixStack.push();
 			matrixStack.scale(0.5f, 0.5f, 0.5f);
 			
-			mc.inGameHud.getTextRenderer().drawWithShadow(matrixStack, "\247oKinkyware \2477v0.0.4", 2, 2, 0xffffffff);
+			mc.inGameHud.getTextRenderer().drawWithShadow(matrixStack, "\247oKinkyware \2477v0.0.4_1", 2, 2, 0xffffffff);
 			mc.inGameHud.getTextRenderer().drawWithShadow(matrixStack, "flyHSpeed: \247e" + HackSupport.flyHSpeed, 2, 12, 0xffffffff);
 			mc.inGameHud.getTextRenderer().drawWithShadow(matrixStack, "flyVSpeed: \247e" + HackSupport.flyVSpeed, 2, 22, 0xffffffff);
 			mc.inGameHud.getTextRenderer().drawWithShadow(matrixStack, "speedSpeed: \247e" + HackSupport.speedSpeed, 2, 32, 0xffffffff);

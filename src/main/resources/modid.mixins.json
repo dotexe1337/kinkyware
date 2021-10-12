@@ -23,7 +23,8 @@
     "MixinRenderLayers",
     "MixinBlockRenderManager",
     "PlayerListEntryMixin",
-    "CapeFeatureRendererMixin"
+    "CapeFeatureRendererMixin",
+    "MixinPacketByteBuf"
   ],
   "injectors": {
     "defaultRequire": 1
